@@ -8,7 +8,7 @@ white='\e[0;37m'
 dotfiles_repo_dir=$(pwd)
 backup_dir="$HOME/.dotfiles.backup"
 dotfiles_home_dir=(.scripts)
-dotfiles_xdg_config_dir=()
+dotfiles_xdg_config_dir=(autostart)
 
 # Print usage message.
 usage() {
