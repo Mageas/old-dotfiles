@@ -8,5 +8,8 @@ xrandr --output Virtual-1 --mode 1920x1080
 # Compositor
 picom -f &
 
+# Status bar
+/home/$USER/.config/autostart/statusbar/statusbar.sh &
+
 # Applications
 firefox &

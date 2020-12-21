@@ -1,3 +1,3 @@
 #!/bin/bash
-date="$(date +"%a, %B %d %l:%M:%S%p"| sed 's/  / /g')"
+date="$(date +"%b %d %Y | %H:%M"| sed 's/  / /g')"
 echo -e "$date"
