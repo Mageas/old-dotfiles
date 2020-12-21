@@ -2,21 +2,21 @@
 
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-# LAUNCH UPDATE SCRIPTS
+# LAUNCH INIT SCRIPTS
 kernel=$($SCRIPTPATH/scripts/kernel.sh)
 cpuload=$($SCRIPTPATH/scripts/cpuload.sh)
 memory=$($SCRIPTPATH/scripts/memory.sh)
 network=$($SCRIPTPATH/scripts/network.sh)
 updates=$($SCRIPTPATH/scripts/updates.sh)
-time=$($SCRIPTPATH/scripts/time.sh)
+date=$($SCRIPTPATH/scripts/date.sh)
 
 # LOOP
 while true; do
     timestamp=$(date +%s)
-    sleep 1s
+    sleep 0.9s # 0.9 because 0.1 delay in network
 
     # UPDATE TIME
-    if (( $timestamp % 2 == 0 )); then
+    if (( $timestamp % 1 == 0 )); then
         cpuload=$($SCRIPTPATH/scripts/cpuload.sh)
     fi
 
@@ -33,9 +33,9 @@ while true; do
     fi
 
     if (( $timestamp % 1 == 0 )); then
-        time=$($SCRIPTPATH/scripts/time.sh)
+        date=$($SCRIPTPATH/scripts/date.sh)
     fi
 
     # OUTPUT
-    xsetroot -name "$kernel | $memory | $cpuload | $updates | $network | $time"
+    xsetroot -name "[ $kernel] [ $cpuload] [ $memory] [$network] [ $updates updates] [ $date]"
 done
