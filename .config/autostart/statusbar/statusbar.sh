@@ -9,11 +9,12 @@ memory=$($SCRIPTPATH/scripts/memory.sh)
 network=$($SCRIPTPATH/scripts/network.sh)
 updates=$($SCRIPTPATH/scripts/updates.sh)
 date=$($SCRIPTPATH/scripts/date.sh)
+pulseaudio=$($SCRIPTPATH/scripts/pulseaudio.sh)
 
 # LOOP
 while true; do
     timestamp=$(date +%s)
-    sleep 0.9s # 0.9 because 0.1 delay in network
+    sleep 0.1s # 0.9 because 0.1 delay in network
 
     # UPDATE TIME
     if (( $timestamp % 1 == 0 )); then
@@ -36,6 +37,10 @@ while true; do
         date=$($SCRIPTPATH/scripts/date.sh)
     fi
 
+    if (( $timestamp % 1 == 0 )); then
+        pulseaudio=$($SCRIPTPATH/scripts/pulseaudio.sh)
+    fi
+
     # OUTPUT
-    xsetroot -name "[ $kernel] [ $cpuload] [ $memory] [$network] [ $updates updates] [ $date]"
+    xsetroot -name "[ $kernel] [ $cpuload] [ $memory] [$network] [ $updates updates] [ $date] [$pulseaudio]"
 done

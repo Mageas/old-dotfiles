@@ -1,2 +1,7 @@
 pacman-contrib
 bc
+alsa-utils
+alsa-oss
+pulseaudio
+pulseaudio-alsa
+pamixer
