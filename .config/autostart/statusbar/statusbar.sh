@@ -37,9 +37,7 @@ while true; do
         date=$($SCRIPTPATH/scripts/date.sh)
     fi
 
-    if (( $timestamp % 1 == 0 )); then
-        pulseaudio=$($SCRIPTPATH/scripts/pulseaudio.sh)
-    fi
+    pulseaudio=$($SCRIPTPATH/scripts/pulseaudio.sh)
 
     # OUTPUT
     xsetroot -name "[ $kernel] [ $cpuload] [ $memory] [$network] [ $updates updates] [ $date] [$pulseaudio]"
