@@ -6,7 +6,7 @@ xrandr --addmode Virtual-1 "1920x1080" &&
 xrandr --output Virtual-1 --mode 1920x1080
 
 # Compositor
-picom -f &
+picom &
 
 # Wallpaper
 feh --bg-fill /home/$USER/.wallpaper.jpg &

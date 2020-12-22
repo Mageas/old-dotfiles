@@ -1,7 +1,21 @@
-pacman-contrib
-bc
-alsa-utils
-alsa-oss
-pulseaudio
-pulseaudio-alsa
-pamixer
+# Liste des depedences des dotfiles
+
+# statusbar
+    # script/updates
+    pacman-contrib
+    # script/network
+    bc
+    # script/pulseaudio
+    alsa-utils
+    alsa-oss
+    pulseaudio
+    pulseaudio-alsa
+    pamixer
+
+# alacritty
+alacritty
+
+# autostart
+feh
+xrandr
+picom
