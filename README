@@ -18,6 +18,7 @@ alacritty
 # shell
 zsh
 zsh-completions
+starship
 
 # autostart
 feh
