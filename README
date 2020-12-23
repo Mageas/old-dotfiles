@@ -15,6 +15,9 @@
 # alacritty
 alacritty
 
+# notify
+dunst
+
 # shell
 zsh
 zsh-completions
