@@ -109,6 +109,9 @@ alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pac
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+# Colorize ls
+alias ls='ls --color=auto'
  
 # confirm before overwriting something
 alias cp="cp -i"
