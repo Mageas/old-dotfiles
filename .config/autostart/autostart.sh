@@ -12,7 +12,7 @@ picom &
 feh --bg-fill /home/$USER/.wallpaper.jpg &
 
 # Status bar
-/home/$USER/.config/autostart/statusbar/statusbar.sh &
+/home/$USER/.config/autostart/statusbar.sh &
 
 # Applications
 firefox &
