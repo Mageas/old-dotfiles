@@ -27,9 +27,10 @@ compinit
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 
+# ❯
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_PROMPT_SEPARATE_LINE=false
-SPACESHIP_CHAR_SYMBOL=❯
+SPACESHIP_CHAR_SYMBOL=":"
 SPACESHIP_CHAR_SUFFIX=" "
 SPACESHIP_HG_SHOW=false
 SPACESHIP_PACKAGE_SHOW=false
