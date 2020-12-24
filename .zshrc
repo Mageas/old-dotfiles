@@ -4,7 +4,7 @@ autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 # PATH
-export PATH=$PATH:$HOME/.scripts
+export PATH=$PATH:$HOME/.config/scripts
 
 # History in cache directory:
 HISTSIZE=10000000

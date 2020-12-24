@@ -7,8 +7,8 @@ red='\e[1;31m'
 white='\e[0;37m'
 dotfiles_repo_dir=$(pwd)
 backup_dir="$HOME/.dotfiles.backup"
-dotfiles_home_dir=(.fonts .scripts .wallpaper.jpg .zshrc)
-dotfiles_xdg_config_dir=(alacritty autostart dunst picom.conf zsh)
+dotfiles_home_dir=(.fonts .wallpaper.jpg .zshrc)
+dotfiles_xdg_config_dir=(alacritty autostart dunst picom.conf scripts zsh)
 
 # Print usage message.
 usage() {
