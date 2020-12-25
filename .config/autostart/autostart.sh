@@ -12,7 +12,7 @@ picom &
 feh --bg-fill /home/$USER/.wallpaper.jpg &
 
 # Status bar
-/home/$USER/.local/share/dwmblocks/dwmblocks &
+dwmblocks &
 
 # Applications
 firefox &
