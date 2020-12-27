@@ -12,11 +12,13 @@
     pulseaudio-alsa
     pamixer
 
-# alacritty
-alacritty
+# dwm
+dwmblocks
+slock
+dmwnu
 
-# notify
-dunst
+# terminal
+alacritty
 
 # shell
 zsh
@@ -27,3 +29,10 @@ starship
 feh
 xrandr
 picom
+
+# other
+dunst
+
+# root
+    lightdm
+    lightdm-gtk-greeter
