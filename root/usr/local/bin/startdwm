@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# AUTOSTART
+/home/$USER/.config/autostart/autostart.sh
+
+# LOOP
+while true; do
+    dwm >/dev/null 2>&1
+done
+
+dwm
