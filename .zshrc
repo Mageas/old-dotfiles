@@ -17,7 +17,7 @@ export KEYTIMEOUT=1
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/mageas/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 # Autocomplete
 autoload -Uz compinit
