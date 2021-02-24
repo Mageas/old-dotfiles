@@ -127,6 +127,7 @@ alias rm='rm -i'
 alias gs="git status"
 alias gb="git branch"
 alias gl="git log"
+alias gf="git fetch"
 
 alias ga="git add"
 alias gaa="git add -A"
@@ -135,5 +136,3 @@ alias gp="git push"
 
 alias gcom="git checkout master"
 alias gco="git checkout"
-
-alias gf="git fetch"
