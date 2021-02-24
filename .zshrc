@@ -118,7 +118,22 @@ alias fgrep='fgrep --color=auto'
 # Colorize ls
 alias ls='ls --color=auto'
  
-# confirm before overwriting something
+# Confirm before overwriting something
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
+
+# Git
+alias gs="git status"
+alias gb="git branch"
+alias gl="git log"
+
+alias ga="git add"
+alias gaa="git add -A"
+alias gc="git commit -m"
+alias gp="git push"
+
+alias gcom="git checkout master"
+alias gco="git checkout"
+
+alias gf="git fetch"
