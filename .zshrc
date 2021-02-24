@@ -1,7 +1,12 @@
 # Enable colors and change prompt:
-autoload -U colors && colors	# Load colors
-#PROMPT='%{$fg[green]%}%~%{$fg_bold[blue]%}$(git_prompt_info)%{$reset_color%} '
+autoload -U colors && colors
+# Prompt without SPACESHIP
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+
+# Bind keys
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^H" backward-kill-word
 
 # PATH
 export PATH=$PATH:$HOME/.config/scripts:$HOME/.config/scripts/statusbar
@@ -10,10 +15,6 @@ export PATH=$PATH:$HOME/.config/scripts:$HOME/.config/scripts/statusbar
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=~/.cache/zsh/history
-
-# vi mode
-bindkey -v
-export KEYTIMEOUT=1
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -88,7 +89,7 @@ ex ()
   fi
 }
 
-
+## Aliases
 # navigation
 alias ..='cd ..' 
 alias ...='cd ../..'
