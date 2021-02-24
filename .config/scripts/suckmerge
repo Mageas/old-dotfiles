@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 suckdiff &&
+git checkout master
 git branch -D custom 
 git branch custom &&
 git checkout custom &&
