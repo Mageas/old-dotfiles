@@ -136,3 +136,9 @@ alias gp="git push"
 
 alias gcom="git checkout master"
 alias gco="git checkout"
+
+# Docker
+alias dc="docker-compose"
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias di="docker images"
