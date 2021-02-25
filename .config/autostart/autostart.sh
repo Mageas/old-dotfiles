@@ -8,6 +8,9 @@ xrandr --output Virtual-1 --mode 1920x1080
 # Compositor
 picom &
 
+# Dunst
+/usr/bin/dunst &
+
 # Wallpaper
 feh --bg-fill /home/$USER/.wallpaper.jpg &
 
