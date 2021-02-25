@@ -1,4 +1,4 @@
-# Mes dotfiles d'amour
+# ❤ Mes dotfiles d'amour ❤
 
 Mes dotfiles pour mon petit linux.
 J'utilise le magnifique et majestueux Arch Linux avec DWM comme window manager.
