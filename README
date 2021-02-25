@@ -1,38 +1,32 @@
-# Liste des depedences des dotfiles
+# Mes dotfiles d'amour
 
-# statusbar
-    # script/updates
-    pacman-contrib
-    # script/network
-    bc
-    # script/pulseaudio
-    alsa-utils
-    alsa-oss
-    pulseaudio
-    pulseaudio-alsa
-    pamixer
+Mes dotfiles pour mon petit linux.
+J'utilise le magnifique et majestueux Arch Linux avec DWM comme window manager.
 
-# dwm
-dwmblocks
-slock
-dmwnu
+## Installation
 
-# terminal
-alacritty
+Il suffit de lancer le script `./install.sh -i`
+Si vous voulez installer toutes mes dots , il faut copier les fichiers de `dotfiles/root/..` vers leurs dossiers respectifs sur Linux
 
-# shell
-zsh
-zsh-completions
-spaceship
+## Désinstallation 
 
-# autostart
-feh
-xrandr
-picom
+Il suffit de lancer le script `./install.sh -r`
+Supprimer les fichiers supplémentaires que vous avec installer manuellement
 
-# other
-dunst
+## Liste des dépendances
 
-# root
-    lightdm
-    lightdm-gtk-greeter
+- [gnu-free-fonts](https://archlinux.org/packages/extra/any/gnu-free-fonts/)
+- [picom](https://github.com/yshui/picom)
+- [alacritty](https://github.com/alacritty/alacritty)
+- [pacman-contrib](https://archlinux.org/packages/community/x86_64/pacman-contrib/)
+- [bc](https://archlinux.org/packages/extra/x86_64/bc/)
+- [alsa-utils](https://github.com/alsa-project/alsa-utils)
+- [alsa-oss](https://archlinux.org/packages/extra/x86_64/alsa-oss/)
+- [pulseaudio](https://archlinux.org/packages/extra/x86_64/pulseaudio/)
+- [pulseaudio-alsa](https://archlinux.org/packages/extra/x86_64/pulseaudio-alsa/)
+- [pamixer](https://github.com/cdemoulins/pamixer)
+- [zsh](https://archlinux.org/packages/extra/x86_64/zsh/)
+- [zsh-completions](https://github.com/zsh-users/zsh-completions)
+- [feh](https://archlinux.org/packages/extra/x86_64/feh/)
+- [dunst](https://github.com/dunst-project/dunst)
+- [numlockx](https://archlinux.org/packages/community/x86_64/numlockx/)
