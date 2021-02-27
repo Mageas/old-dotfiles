@@ -13,7 +13,7 @@ Si vous voulez installer toutes mes dots , il faut copier les fichiers de `dotfi
 Il suffit de lancer le script `./install.sh -r`
 Supprimer les fichiers supplémentaires que vous avec installer manuellement
 
-## Liste des dépendances (obligatoires ou optionnelles)
+## Liste des dépendances (obligatoires et optionnelles)
 
 - [alacritty](https://github.com/alacritty/alacritty)
 - [alsa-oss](https://archlinux.org/packages/extra/x86_64/alsa-oss/)
