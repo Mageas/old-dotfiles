@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 git checkout master &&
-difffiles="$HOME/.diffs/"
+difffiles="$HOME/.local/.suckdiffs/"
 project=$(basename $(pwd))
 diffdir="${difffiles}/${project}_diffs/"
 olddiffdir="${difffiles}/${project}_diffs/old/"

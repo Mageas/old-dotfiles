@@ -15,7 +15,7 @@ copyq &
 /usr/bin/dunst &
 
 # Wallpaper
-feh --bg-fill /home/$USER/.wallpaper.jpg &
+feh --bg-fill /home/$USER/.config/wallpaper/wallpaper.jpg &
 
 # Status bar
 dwmblocks &
