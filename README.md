@@ -15,7 +15,7 @@ Supprimer les fichiers supplémentaires que vous avec installer manuellement
 
 ## Installation/Désinstallation du dossier root
 
-Il sufit de lancer le script `./install_root.sh -r` dans `root`  
+Il sufit de lancer le script `./install_root.sh` dans `root`  
 Le script demande s'il doit écraser un fichier  
 La désinstallation se fait à la main
 
