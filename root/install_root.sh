@@ -25,7 +25,7 @@ done
 for file in "${splitMultiChar[@]}"; do
     file=$(echo $file|tr -d '\n')
     if [[ "$file" != "" && "$file" != "install_root.sh" ]]; then
-        echo "./$file --> /$file"
+        printf "\n./$file --> /$file\n"
         sudo cp -i "./$file" "/$file"
     fi
 done
