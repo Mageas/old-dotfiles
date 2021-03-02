@@ -8,7 +8,7 @@ white='\e[0;37m'
 dotfiles_repo_dir=$(pwd)
 backup_dir="$HOME/.local/.dotfiles.backup"
 dotfiles_home_dir=(.zshrc)
-dotfiles_xdg_config_dir=(alacritty autostart dunst picom ranger scripts wallpaper zsh)
+dotfiles_xdg_config_dir=(alacritty autostart dunst nvim picom ranger scripts wallpaper zsh)
 
 # Print usage message.
 usage() {
@@ -128,10 +128,6 @@ main() {
             ;;
         -r)
             uninstall_dotfiles
-            ;;
-        -ri)
-            uninstall_dotfiles
-            install_dotfiles
             ;;
         *)
             echo "Command not found" >&2
