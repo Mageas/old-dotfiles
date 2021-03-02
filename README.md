@@ -3,15 +3,21 @@
 Mes dotfiles pour mon petit linux.
 J'utilise le magnifique et majestueux Arch Linux avec DWM comme window manager.
 
-## Installation
+## Installation des dotfiles
 
 Il suffit de lancer le script `./install.sh -i`
 Si vous voulez installer toutes mes dots , il faut copier les fichiers de `dotfiles/root/..` vers leurs dossiers respectifs sur Linux
 
-## Désinstallation 
+## Désinstallation des dotfiles
 
 Il suffit de lancer le script `./install.sh -r`
 Supprimer les fichiers supplémentaires que vous avec installer manuellement
+
+## Installation/Désinstallation du dossier root
+
+Il sufit de lancer le script `./install_root.sh -r` dans `root`
+Le script demande s'il doit écraser un fichier
+La désinstallation se fait à la main
 
 ## Liste des dépendances (obligatoires et optionnelles)
 
