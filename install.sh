@@ -5,18 +5,12 @@
 # Set workdir
 cd "$(dirname "$0")"
 
-# If root detect user folder
-if [[ $EUID -eq 0 ]]; then
-    home_folder="/home/$(getent passwd {1000..6000} | awk '{split($0,a,":"); print a[1]}')"
-else
-    home_folder="$HOME"
-fi
-
+# Variables
 blue='\e[1;34m'
 red='\e[1;31m'
 white='\e[0;37m'
 dotfiles_repo_dir=$(pwd)
-backup_dir="$home_folder/.local/.dotfiles.backup"
+backup_dir="$HOME/.local/.dotfiles.backup"
 dotfiles_home_dir=(.zshrc)
 dotfiles_xdg_config_dir=(alacritty autostart dunst nvim picom ranger scripts wallpaper zsh)
 
@@ -43,13 +37,13 @@ install_dotfiles() {
         # Backup to ~/.dotfiles.backup
         for dots_home in "${dotfiles_home_dir[@]}"
         do
-            env cp -rf "$home_folder/${dots_home}" "$backup_dir" &> /dev/null
+            env cp -rf "$HOME/${dots_home}" "$backup_dir" &> /dev/null
         done
 
         # Backup some folder in ~/.config to ~/.dotfiles.backup/.config
         for dots_xdg_conf in "${dotfiles_xdg_config_dir[@]//./}"
         do
-            env cp -rf "$home_folder/.config/${dots_xdg_conf}" "$backup_dir/.config" &> /dev/null
+            env cp -rf "$HOME/.config/${dots_xdg_conf}" "$backup_dir/.config" &> /dev/null
         done
 
         # Backup again with Git.
@@ -69,18 +63,18 @@ install_dotfiles() {
     # Install config.
     for dots_home in "${dotfiles_home_dir[@]}"
     do
-        env rm -rf "$home_folder/${dots_home}"
-        env cp -rf "$dotfiles_repo_dir/${dots_home}" "$home_folder/" &> /dev/null
-        # env ln -fs "$dotfiles_repo_dir/${dots_home}" "$home_folder/"
+        env rm -rf "$HOME/${dots_home}"
+        env cp -rf "$dotfiles_repo_dir/${dots_home}" "$HOME/" &> /dev/null
+        # env ln -fs "$dotfiles_repo_dir/${dots_home}" "$HOME/"
     done
 
     # Install .config to ~/.config.
-    mkdir -p "$home_folder/.config"
+    mkdir -p "$HOME/.config"
     for dots_xdg_conf in "${dotfiles_xdg_config_dir[@]}"
     do
-        env rm -rf "$home_folder/.config/${dots_xdg_conf[*]//./}"
-        env cp -rf "$dotfiles_repo_dir/.config/${dots_xdg_conf}" "$home_folder/.config/${dots_xdg_conf}" &> /dev/null
-        # env ln -fs "$dotfiles_repo_dir/${dots_xdg_conf}" "$home_folder/.config/${dots_xdg_conf[*]//./}"
+        env rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}"
+        env cp -rf "$dotfiles_repo_dir/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
+        # env ln -fs "$dotfiles_repo_dir/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf[*]//./}"
     done
 
     echo -e "${blue}New dotfiles is installed!\n${white}" >&2
@@ -94,15 +88,15 @@ uninstall_dotfiles() {
     if [ -f "$backup_dir/check-backup.txt" ]; then
         for dots_home in "${dotfiles_home_dir[@]}"
         do
-            env rm -rf "$home_folder/${dots_home}"
-            env cp -rf "$backup_dir/${dots_home}" "$home_folder/" &> /dev/null
+            env rm -rf "$HOME/${dots_home}"
+            env cp -rf "$backup_dir/${dots_home}" "$HOME/" &> /dev/null
             env rm -rf "$backup_dir/${dots_home}"
         done
 
         for dots_xdg_conf in "${dotfiles_xdg_config_dir[@]//./}"
         do
-            env rm -rf "$home_folder/.config/${dots_xdg_conf}"
-            env cp -rf "$backup_dir/.config/${dots_xdg_conf}" "$home_folder/.config" &> /dev/null
+            env rm -rf "$HOME/.config/${dots_xdg_conf}"
+            env cp -rf "$backup_dir/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
             env rm -rf "$backup_dir/.config/${dots_xdg_conf}"
         done
 
