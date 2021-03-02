@@ -2,6 +2,9 @@
 
 # This script is not mine, the original link: https://github.com/dikiaap/dotfiles
 
+# Set workdir
+cd "$(dirname "$0")"
+
 blue='\e[1;34m'
 red='\e[1;31m'
 white='\e[0;37m'
