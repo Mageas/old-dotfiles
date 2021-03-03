@@ -27,15 +27,13 @@ function anti_root () {
 function install_dotfiles () {
     backup
 
-    for dots_home in "${TO_HOME_FOLDER[@]}"
-    do
+    for dots_home in "${TO_HOME_FOLDER[@]}"; do
         rm -rf "$HOME/${dots_home}" &> /dev/null
         cp -rf "$SCRIPT_FOLDER/${dots_home}" "$HOME/" &> /dev/null
     done
 
     mkdir -p "$HOME/.config"
-    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]}"
-    do
+    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]}"; do
         rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}" &> /dev/null
         cp -rf "$SCRIPT_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
     done
@@ -55,15 +53,13 @@ function uninstall_dotfiles () {
         exit 1
     fi
 
-    for dots_home in "${TO_HOME_FOLDER[@]}"
-    do
+    for dots_home in "${TO_HOME_FOLDER[@]}"; do
         rm -rf "$HOME/${dots_home}" &> /dev/null
         cp -rf "$BACKUP_FOLDER/${dots_home}" "$HOME/" &> /dev/null
         rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
     done
 
-    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"
-    do
+    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"; do
         rm -rf "$HOME/.config/${dots_xdg_conf}" &> /dev/null
         cp -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
         rm -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" &> /dev/null
