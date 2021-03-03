@@ -6,7 +6,11 @@ PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magent
 # Bind keys
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
+
 bindkey "^H" backward-kill-word
+
+bindkey '^[[3;5~' kill-word
+bindkey '^[[3~' delete-char
 
 # PATH
 export PATH=$PATH:$HOME/.config/scripts:$HOME/.config/scripts/statusbar
