@@ -3,8 +3,8 @@
 #
 # Variables
 #
-SCRIPT_FOLDER="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 BACKUP_FOLDER="$HOME/.local/.dotfiles.backup"
+SCRIPT_FOLDER="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 TO_HOME_FOLDER=(.zshrc)
 TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst nvim picom ranger scripts wallpaper zsh)
 
