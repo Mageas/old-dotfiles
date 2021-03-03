@@ -22,30 +22,6 @@ function anti_root () {
 
 
 #
-# Create backup
-#
-function backup () {
-    if [[ -f "$BACKUP_FOLDER/check-backup.txt" ]]; then return 0; fi
-
-    mkdir -p "$BACKUP_FOLDER/.config" &> /dev/null
-    cd "$BACKUP_FOLDER" || exit
-    touch check-backup.txt &> /dev/null
-
-    for dots_home in "${TO_HOME_FOLDER[@]}"
-    do
-        env cp -rf "$SCRIPT_FOLDER/${dots_home}" "$BACKUP_FOLDER" &> /dev/null
-    done
-
-    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"
-    do
-        env cp -rf "$HOME/.config/${dots_xdg_conf}" "$BACKUP_FOLDER/.config" &> /dev/null
-    done
-
-    create_git_backup
-}
-
-
-#
 # Install dotfiles
 #
 function install_dotfiles () {
@@ -93,12 +69,7 @@ function uninstall_dotfiles () {
         env rm -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" &> /dev/null
     done
 
-    if [ -x "$(command -v git)" ]; then
-        cd "$BACKUP_FOLDER" || exit
-        git add -u &> /dev/null
-        git add . &> /dev/null
-        git commit -m "Restore original config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
-    fi
+    update_git_backup "Restore"
 
     echo "Your old config has been restored!" >&2
     echo "Thanks for using my dotfiles." >&2
@@ -107,14 +78,60 @@ function uninstall_dotfiles () {
 
 
 #
+# Create backup
+#
+function backup () {
+    local has_backup=True
+    if ! [[ -f "$BACKUP_FOLDER/check-backup.txt" ]]; then has_backup=False; fi
+
+    if [[ $has_backup == False ]]; then 
+        mkdir -p "$BACKUP_FOLDER/.config" &> /dev/null
+        cd "$BACKUP_FOLDER" || exit
+        touch check-backup.txt &> /dev/null
+    fi
+
+    for dots_home in "${TO_HOME_FOLDER[@]}"; do
+        if [[ $has_backup == True ]]; then 
+            env rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
+        fi
+        env cp -rf "$SCRIPT_FOLDER/${dots_home}" "$BACKUP_FOLDER" &> /dev/null
+    done
+
+    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"; do
+        if [[ $has_backup == True ]]; then 
+            env rm -rf "$BACKUP_FOLDER/${dots_xdg_conf}" &> /dev/null
+        fi
+        env cp -rf "$HOME/.config/${dots_xdg_conf}" "$BACKUP_FOLDER/.config" &> /dev/null
+    done
+
+    if [[ $has_backup == False ]]; then
+        create_git_backup "Backup original"
+    else
+        update_git_backup "Update"
+    fi
+}
+
+
+#
 # Create git backup
 #
 function create_git_backup () {
     if [ -x "$(command -v git)" ]; then
+        cd "$BACKUP_FOLDER" || exit
         git init &> /dev/null
+        update_git_backup $1
+    fi
+}
+
+#
+# Create git backup
+#
+function update_git_backup () {
+    if [ -x "$(command -v git)" ]; then
+        cd "$BACKUP_FOLDER" || exit
         git add -u &> /dev/null
         git add . &> /dev/null
-        git commit -m "Backup original config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
+        git commit -m "$1 config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
     fi
 }
 
