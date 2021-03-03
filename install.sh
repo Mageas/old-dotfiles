@@ -29,15 +29,15 @@ function install_dotfiles () {
 
     for dots_home in "${TO_HOME_FOLDER[@]}"
     do
-        env rm -rf "$HOME/${dots_home}" &> /dev/null
-        env cp -rf "$SCRIPT_FOLDER/${dots_home}" "$HOME/" &> /dev/null
+        rm -rf "$HOME/${dots_home}" &> /dev/null
+        cp -rf "$SCRIPT_FOLDER/${dots_home}" "$HOME/" &> /dev/null
     done
 
     mkdir -p "$HOME/.config"
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]}"
     do
-        env rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}" &> /dev/null
-        env cp -rf "$SCRIPT_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
+        rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}" &> /dev/null
+        cp -rf "$SCRIPT_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
     done
 
     echo -e "Your config is backed up in ${BACKUP_FOLDER}\n" >&2
@@ -57,20 +57,20 @@ function uninstall_dotfiles () {
 
     for dots_home in "${TO_HOME_FOLDER[@]}"
     do
-        env rm -rf "$HOME/${dots_home}" &> /dev/null
-        env cp -rf "$BACKUP_FOLDER/${dots_home}" "$HOME/" &> /dev/null
-        env rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
+        rm -rf "$HOME/${dots_home}" &> /dev/null
+        cp -rf "$BACKUP_FOLDER/${dots_home}" "$HOME/" &> /dev/null
+        rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
     done
 
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"
     do
-        env rm -rf "$HOME/.config/${dots_xdg_conf}" &> /dev/null
-        env cp -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
-        env rm -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" &> /dev/null
+        rm -rf "$HOME/.config/${dots_xdg_conf}" &> /dev/null
+        cp -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
+        rm -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" &> /dev/null
     done
 
     update_git_backup "Restore"
-    env rm -rf "$BACKUP_FOLDER/check-backup.txt" &> /dev/null
+    rm -rf "$BACKUP_FOLDER/check-backup.txt" &> /dev/null
 
     echo "Your old config has been restored!" >&2
     echo "Thanks for using my dotfiles." >&2
@@ -93,16 +93,16 @@ function backup () {
 
     for dots_home in "${TO_HOME_FOLDER[@]}"; do
         if [[ $has_backup == True ]]; then 
-            env rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
+            rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
         fi
-        env cp -rf "$SCRIPT_FOLDER/${dots_home}" "$BACKUP_FOLDER" &> /dev/null
+        cp -rf "$SCRIPT_FOLDER/${dots_home}" "$BACKUP_FOLDER" &> /dev/null
     done
 
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"; do
         if [[ $has_backup == True ]]; then 
-            env rm -rf "$BACKUP_FOLDER/${dots_xdg_conf}" &> /dev/null
+            rm -rf "$BACKUP_FOLDER/${dots_xdg_conf}" &> /dev/null
         fi
-        env cp -rf "$HOME/.config/${dots_xdg_conf}" "$BACKUP_FOLDER/.config" &> /dev/null
+        cp -rf "$HOME/.config/${dots_xdg_conf}" "$BACKUP_FOLDER/.config" &> /dev/null
     done
 
     if [[ $has_backup == False ]]; then
