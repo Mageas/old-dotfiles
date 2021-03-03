@@ -1,20 +1,127 @@
 #!/usr/bin/env bash
 
-# This script is not mine, the original link: https://github.com/dikiaap/dotfiles
-
-# Set workdir
-cd "$(dirname "$0")"
-
+#
 # Variables
-blue='\e[1;34m'
-red='\e[1;31m'
-white='\e[0;37m'
-dotfiles_repo_dir=$(pwd)
-backup_dir="$HOME/.local/.dotfiles.backup"
-dotfiles_home_dir=(.zshrc)
-dotfiles_xdg_config_dir=(alacritty autostart dunst nvim picom ranger scripts wallpaper zsh)
+#
+SCRIPT_FOLDER="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+BACKUP_FOLDER="$HOME/.local/.dotfiles.backup"
+TO_HOME_FOLDER=(.zshrc)
+TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst nvim picom ranger scripts wallpaper zsh)
 
-# Print usage message.
+
+#
+# Anti ROOT
+#
+function anti_root () {
+    if [[ $EUID -eq 0 ]]; then
+        local RED='\033[0;31m'; local BOLD='\033[1m'
+        printf "${RED}${BOLD}!! Please do not run this script as root !! \n" 1>&2
+        exit 1
+    fi
+}
+
+
+#
+# Create backup
+#
+function backup () {
+    if [[ -f "$BACKUP_FOLDER/check-backup.txt" ]]; then return 0; fi
+
+    mkdir -p "$BACKUP_FOLDER/.config" &> /dev/null
+    cd "$BACKUP_FOLDER" || exit
+    touch check-backup.txt &> /dev/null
+
+    for dots_home in "${TO_HOME_FOLDER[@]}"
+    do
+        env cp -rf "$SCRIPT_FOLDER/${dots_home}" "$BACKUP_FOLDER" &> /dev/null
+    done
+
+    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"
+    do
+        env cp -rf "$HOME/.config/${dots_xdg_conf}" "$BACKUP_FOLDER/.config" &> /dev/null
+    done
+
+    create_git_backup
+}
+
+
+#
+# Install dotfiles
+#
+function install_dotfiles () {
+    backup
+
+    for dots_home in "${TO_HOME_FOLDER[@]}"
+    do
+        env rm -rf "$HOME/${dots_home}" &> /dev/null
+        env cp -rf "$SCRIPT_FOLDER/${dots_home}" "$HOME/" &> /dev/null
+    done
+
+    mkdir -p "$HOME/.config"
+    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]}"
+    do
+        env rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}" &> /dev/null
+        env cp -rf "$SCRIPT_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
+    done
+
+    echo -e "Your config is backed up in ${BACKUP_FOLDER}\n" >&2
+    echo -e "Please do not delete check-backup.txt in your backup folder." >&2
+    echo -e "It's used to backup and restore your old config.\n" >&2
+}
+
+
+#
+# Uninstall dotfiles
+#
+function uninstall_dotfiles () {
+    if ! [[ -f "$BACKUP_FOLDER/check-backup.txt" ]]; then 
+        echo "You have not installed this dotfiles yet." >&2
+        exit 1
+    fi
+
+    for dots_home in "${TO_HOME_FOLDER[@]}"
+    do
+        env rm -rf "$HOME/${dots_home}" &> /dev/null
+        env cp -rf "$BACKUP_FOLDER/${dots_home}" "$HOME/" &> /dev/null
+        env rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
+    done
+
+    for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"
+    do
+        env rm -rf "$HOME/.config/${dots_xdg_conf}" &> /dev/null
+        env cp -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
+        env rm -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" &> /dev/null
+    done
+
+    if [ -x "$(command -v git)" ]; then
+        cd "$BACKUP_FOLDER" || exit
+        git add -u &> /dev/null
+        git add . &> /dev/null
+        git commit -m "Restore original config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
+    fi
+
+    echo "Your old config has been restored!" >&2
+    echo "Thanks for using my dotfiles." >&2
+    echo "Enjoy your next journey!" >&2
+}
+
+
+#
+# Create git backup
+#
+function create_git_backup () {
+    if [ -x "$(command -v git)" ]; then
+        git init &> /dev/null
+        git add -u &> /dev/null
+        git add . &> /dev/null
+        git commit -m "Backup original config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
+    fi
+}
+
+
+#
+# Usage
+#
 usage() {
     local program_name
     program_name=${0##*/}
@@ -22,106 +129,16 @@ usage() {
 Usage: $program_name [-option]
 Options:
     --help    Print this message
-    -i        Install all config
-    -r        Restore old config
+    -i        Install this dotfiles
+    -r        Restore your old config
 EOF
 }
 
-install_dotfiles() {
-    # Backup config.
-    if ! [ -f "$backup_dir/check-backup.txt" ]; then
-        mkdir -p "$backup_dir/.config"
-        cd "$backup_dir" || exit
-        touch check-backup.txt
 
-        # Backup to ~/.dotfiles.backup
-        for dots_home in "${dotfiles_home_dir[@]}"
-        do
-            env cp -rf "$HOME/${dots_home}" "$backup_dir" &> /dev/null
-        done
-
-        # Backup some folder in ~/.config to ~/.dotfiles.backup/.config
-        for dots_xdg_conf in "${dotfiles_xdg_config_dir[@]//./}"
-        do
-            env cp -rf "$HOME/.config/${dots_xdg_conf}" "$backup_dir/.config" &> /dev/null
-        done
-
-        # Backup again with Git.
-        if [ -x "$(command -v git)" ]; then
-            git init &> /dev/null
-            git add -u &> /dev/null
-            git add . &> /dev/null
-            git commit -m "Backup original config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
-        fi
-
-        # Output.
-        echo -e "${blue}Your config is backed up in ${backup_dir}\n" >&2
-        echo -e "${red}Please do not delete check-backup.txt in .dotfiles.backup folder.${white}" >&2
-        echo -e "It's used to backup and restore your old config.\n" >&2
-    fi
-
-    # Install config.
-    for dots_home in "${dotfiles_home_dir[@]}"
-    do
-        env rm -rf "$HOME/${dots_home}"
-        env cp -rf "$dotfiles_repo_dir/${dots_home}" "$HOME/" &> /dev/null
-        # env ln -fs "$dotfiles_repo_dir/${dots_home}" "$HOME/"
-    done
-
-    # Install .config to ~/.config.
-    mkdir -p "$HOME/.config"
-    for dots_xdg_conf in "${dotfiles_xdg_config_dir[@]}"
-    do
-        env rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}"
-        env cp -rf "$dotfiles_repo_dir/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
-        # env ln -fs "$dotfiles_repo_dir/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf[*]//./}"
-    done
-
-    echo -e "${blue}New dotfiles is installed!\n${white}" >&2
-    echo "There may be some errors when Terminal is restarted." >&2
-    echo "Please read carefully the error messages and make sure all packages are installed. See more info in README.md." >&2
-    echo "Note that the author of this dotfiles uses dev branch in some packages." >&2
-    echo -e "If you want to restore your old config, you can use ${red}./install.sh -r${white} command." >&2
-}
-
-uninstall_dotfiles() {
-    if [ -f "$backup_dir/check-backup.txt" ]; then
-        for dots_home in "${dotfiles_home_dir[@]}"
-        do
-            env rm -rf "$HOME/${dots_home}"
-            env cp -rf "$backup_dir/${dots_home}" "$HOME/" &> /dev/null
-            env rm -rf "$backup_dir/${dots_home}"
-        done
-
-        for dots_xdg_conf in "${dotfiles_xdg_config_dir[@]//./}"
-        do
-            env rm -rf "$HOME/.config/${dots_xdg_conf}"
-            env cp -rf "$backup_dir/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
-            env rm -rf "$backup_dir/.config/${dots_xdg_conf}"
-        done
-
-        # Save old config in backup directory with Git.
-        if [ -x "$(command -v git)" ]; then
-            cd "$backup_dir" || exit
-            git add -u &> /dev/null
-            git add . &> /dev/null
-            git commit -m "Restore original config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
-        fi
-    fi
-
-    if ! [ -f "$backup_dir/check-backup.txt" ]; then
-        echo -e "${red}You have not installed this dotfiles yet.${white}" >&2
-        exit 1
-    else
-        echo -e "${blue}Your old config has been restored!\n${white}" >&2
-        echo "Thanks for using my dotfiles." >&2
-        echo "Enjoy your next journey!" >&2
-    fi
-
-    env rm -rf "$backup_dir/check-backup.txt"
-}
-
-main() {
+#
+# Main
+#
+function main () {
     case "$1" in
         ''|-h|--help)
             usage
@@ -134,9 +151,11 @@ main() {
             uninstall_dotfiles
             ;;
         *)
-            echo "Command not found" >&2
+            echo "Invalids arguments ($@)"
+            usage
             exit 1
     esac
 }
+
 
 main "$@"
