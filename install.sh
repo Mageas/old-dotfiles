@@ -42,7 +42,7 @@ function install_dotfiles () {
 
     echo -e "Your config is backed up in ${BACKUP_FOLDER}\n" >&2
     echo -e "Please do not delete check-backup.txt in your backup folder." >&2
-    echo -e "It's used to backup and restore your old config.\n" >&2
+    echo -e "It's used to backup and restore your old config." >&2
 }
 
 
@@ -70,6 +70,7 @@ function uninstall_dotfiles () {
     done
 
     update_git_backup "Restore"
+    env rm -rf "$BACKUP_FOLDER/check-backup.txt" &> /dev/null
 
     echo "Your old config has been restored!" >&2
     echo "Thanks for using my dotfiles." >&2
@@ -105,7 +106,7 @@ function backup () {
     done
 
     if [[ $has_backup == False ]]; then
-        create_git_backup "Backup original"
+        create_git_backup "Backup"
     else
         update_git_backup "Update"
     fi
@@ -123,8 +124,9 @@ function create_git_backup () {
     fi
 }
 
+
 #
-# Create git backup
+# Update git backup
 #
 function update_git_backup () {
     if [ -x "$(command -v git)" ]; then
@@ -156,6 +158,9 @@ EOF
 # Main
 #
 function main () {
+
+    anti_root
+
     case "$1" in
         ''|-h|--help)
             usage
