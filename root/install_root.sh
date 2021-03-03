@@ -35,6 +35,19 @@ function anti_root () {
 
 
 #
+# Check root password
+#
+function check_root_password () {
+    sudo echo "Correct root password !"
+    if [[ $? -eq 1 ]]; then
+        local RED='\033[0;31m'; local BOLD='\033[1m'
+        printf "${RED}${BOLD}!! Your root password is wrong !! \n" 1>&2
+        exit 1
+    fi
+}
+
+
+#
 # List files
 #
 function list_files () {
@@ -75,6 +88,8 @@ function copy_files () {
 #
 function main () {
     anti_root
+
+    check_root_password
 
     set_variables_from_args "$@"
 
