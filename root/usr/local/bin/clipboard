@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+while clipnotify;
+do
+  echo -n "$(xsel)" | xsel -i
+  echo -n "$(xsel -b)" | xsel -bi
+done
