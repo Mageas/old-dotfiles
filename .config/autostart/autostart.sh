@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-# Screen
-xrandr --newmode "1920x1080" 173.00 1920 2048 2248 2576 1080 1083 1088 1120 -hsync +vsync &&
-xrandr --addmode Virtual-1 "1920x1080" &&
-xrandr --output Virtual-1 --mode 1920x1080
+# Screen - CVT
+xrandr --output DP-4 --mode "1920x1080" --rate 160 --output DP-1 --mode "1280x1024" --rate 60 --left-of DP-4
 
 # Compositor
 picom &
