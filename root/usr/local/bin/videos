@@ -8,7 +8,10 @@ else
     visual="$CLIPBOARD"
 fi
 
-response=$(echo -e "mpv\nvlc" | dmenu -p "How to open $visual ?")
+options="mpv
+vlc"
+
+response=$(echo -e "$options" | dmenu -p "How to open $visual ?")
 
 case "$response" in
     "mpv")

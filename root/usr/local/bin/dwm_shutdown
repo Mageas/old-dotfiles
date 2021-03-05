@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+options="shutdown
+reboot"
+
+response=$(echo -e "$options" | dmenu -p "Follow your heart!")
+
+case "$response" in
+    "shutdown")
+        echo "shutdown"
+        ;;
+    "reboot")
+        echo "reboot"
+        ;;
+esac
