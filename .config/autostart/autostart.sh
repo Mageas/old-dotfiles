@@ -16,7 +16,7 @@ feh --bg-fill /home/$USER/.config/wallpaper/wallpaper.jpg &
 dwmblocks &
 
 # Clipboard
-clipboard &
+# clipboard &
 
 # Applications
 firefox &
