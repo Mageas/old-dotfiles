@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+CLIPBOARD="$(xsel -b)"
+
+if [[ ${#CLIPBOARD} -gt 30 ]]; then
+    visual="${CLIPBOARD:0:20}"..."${CLIPBOARD: -7}"
+else
+    visual="$CLIPBOARD"
+fi
+
+response=$(echo -e "mpv\nvlc" | dmenu -p "How to open $visual ?")
+
+case "$response" in
+    "vlc")
+        echo "VLC"
+        ;;
+    "mpv")
+        mpv $CLIPBOARD
+        ;;
+esac
