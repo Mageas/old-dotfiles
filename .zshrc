@@ -93,6 +93,8 @@ ex ()
   fi
 }
 
+colorscript random
+
 ## Aliases
 # navigation
 alias ..='cd ..' 

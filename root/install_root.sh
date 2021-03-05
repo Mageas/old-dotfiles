@@ -72,6 +72,11 @@ function copy_files () {
     for file in "${splitMultiChar[@]}"; do
         file=$(echo $file|tr -d '\n')
         if [[ "$file" != "" && "$file" != "install_root.sh" ]]; then
+            local parent="/$(echo $file | sed -r "s/(.+)\/.*/\1/")"
+            if [ ! -d "$parent" ]; then
+                printf "\n[Create folder] --> $parent\n"
+                sudo mkdir -p $parent
+            fi
             printf "\n./$file --> /$file\n"
             if [[ $NO_CONFIRM == True ]]; then
                 sudo cp "./$file" "/$file"

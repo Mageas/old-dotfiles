@@ -36,3 +36,7 @@ La désinstallation se fait à la main
 - [numlockx](https://archlinux.org/packages/community/x86_64/numlockx/)
 - [zsh](https://archlinux.org/packages/extra/x86_64/zsh/)
 - [zsh-completions](https://github.com/zsh-users/zsh-completions)
+
+## Merci à
+
+[Derek Taylor](https://gitlab.com/dwt1/shell-color-scripts) pour les scripts permettant d'afficher les dessins dans le terminal. 
