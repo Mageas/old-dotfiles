@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+options="window
+selection"
+
+response=$(echo -e "$options" | dmenu -p "Which capture do you want?")
+
+case "$response" in
+    "window")
+        maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+        ;;
+    "selection")
+        maim -s | xclip -selection clipboard -t image/png
+        ;;
+esac
