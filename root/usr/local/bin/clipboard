@@ -6,6 +6,6 @@ while true; do
 	clipboard=$(xclip -o -selection clipboard)
 	primary=$(xclip -o -selection primary)
 
-	echo -n $clipboard | xclip -selection clipboard
-	echo -n $primary | xclip -selection primary
+	printf "$clipboard" | xclip -selection clipboard
+	printf "$primary" | xclip -selection primary
 done
