@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
-while clipnotify; do
-  echo -n "$(xsel)" | xsel -i
-  echo -n "$(xsel -b)" | xsel -bi
+old_xsel_b=""
+
+while true; do
+  clipnotify
+
+  # Do nothing if clipboard is equal to copy 
+  if [[ $(xsel -b) != $old_xsel_b ]]; then
+    old_xsel_b=$(xsel -b)
+    echo -n "$(xsel -b)" | xsel -bi
+  fi
+
+  # Do nothing for secondary clipboard
+  # echo -n "$(xsel)" | xsel -i
 done
