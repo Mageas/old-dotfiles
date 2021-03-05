@@ -11,10 +11,10 @@ fi
 response=$(echo -e "mpv\nvlc" | dmenu -p "How to open $visual ?")
 
 case "$response" in
-    "vlc")
-        echo "VLC"
-        ;;
     "mpv")
         mpv $CLIPBOARD
+        ;;
+    "vlc")
+        vlc $CLIPBOARD
         ;;
 esac
