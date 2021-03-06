@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-SINK=42
+DEVICE_NAME=$(pactl info | grep "Default Sink:" | sed -r "s/.+ (.+)/\1/")
+SINK=$(pamixer --list-sinks | grep "$DEVICE_NAME" | sed -r "s/([0-9]+).+/\1/")
+
+echo $SINK
 
 case "$1" in
     toggle)
@@ -8,6 +11,6 @@ case "$1" in
         ;;
     set=*)
         volume=`echo $1 | sed 's/[-a-zA-Z0-9]*=//'`
-        pactl set-sink-volume $SINK $volume
+        /usr/bin/pactl set-sink-volume $SINK $volume
         ;;
 esac
