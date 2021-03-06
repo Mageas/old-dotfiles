@@ -7,9 +7,9 @@ response=$(echo -e "$options" | dmenu -p "Follow your heart!")
 
 case "$response" in
     "shutdown")
-        echo "shutdown"
+        shutdown now
         ;;
     "reboot")
-        echo "reboot"
+        reboot
         ;;
 esac
