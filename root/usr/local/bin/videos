@@ -8,12 +8,12 @@ else
     visual="$CLIPBOARD"
 fi
 
-options="mpv
-vlc"
+declare -a options=("mpv
+vlc")
 
-response=$(echo -e "$options" | dmenu -p "How to open $visual ?")
+choice=$(echo -e "${options[@]}" | dmenu -p "How to open $visual ?")
 
-case "$response" in
+case "$choice" in
     "mpv")
         mpv $CLIPBOARD
         ;;

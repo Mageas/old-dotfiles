@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-options="shutdown
-reboot"
+declare -a options=("shutdown
+reboot")
 
-response=$(echo -e "$options" | dmenu -p "Follow your heart!")
+choice=$(echo -e "${options[@]}" | dmenu -p "Follow your heart!")
 
-case "$response" in
-    "shutdown")
+case "$choice" in
+    shutdown)
         shutdown now
-        ;;
-    "reboot")
+    ;;
+    reboot)
         reboot
-        ;;
+    ;;
 esac

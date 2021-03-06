@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
-options="window
-selection"
+declare -a options=("window
+selection")
 
-response=$(echo -e "$options" | dmenu -p "Which capture do you want?")
+choice=$(echo -e "${options[@]}" | dmenu -p "Which capture do you want?")
 
-case "$response" in
-    "window")
+case "$choice" in
+    window)
         maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-        ;;
-    "selection")
+        notify-send -i $HOME/.config/icons/screenshot_ico.png "Screenshot" "You're the best photographer I've ever seen."
+    ;;
+    selection)
         maim -s | xclip -selection clipboard -t image/png
-        ;;
+        notify-send -i $HOME/.config/icons/screenshot_ico.png "Screenshot" "You're the best photographer I've ever seen."
+    ;;
 esac
