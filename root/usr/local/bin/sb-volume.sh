@@ -1,12 +1,11 @@
 #!/bin/sh
 
-muted=$(pamixer --sink 0 --get-mute)
+volume=$(pamixer --get-volume)
+mute=$(pamixer --get-mute)
 
-if [ "$muted" = true ]; then
+if [ "$mute" = true ]; then
     return="ﱝ muted"
 else
-    volume=$(pamixer --sink 0 --get-volume)
-
     if [ "$volume" -gt 49 ]; then
         return=" $volume%"
     else

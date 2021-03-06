@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+SINK=42
+
+case "$1" in
+    toggle)
+        /usr/bin/pactl set-sink-mute $SINK toggle
+        ;;
+    set=*)
+        volume=`echo $1 | sed 's/[-a-zA-Z0-9]*=//'`
+        pactl set-sink-volume $SINK $volume
+        ;;
+esac
