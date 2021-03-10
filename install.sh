@@ -60,7 +60,6 @@ function uninstall_dotfiles () {
         rm -rf "${DEFAULT_BACKUP_FOLDER}/.config/${dots_xdg_conf}" &> /dev/null
     done
 
-    update_git_backup "Restore"
     rm -rf "${BACKUP_FOLDER}/check-backup.txt" &> /dev/null
     rm -rf "${DEFAULT_BACKUP_FOLDER}" &> /dev/null
 
@@ -90,8 +89,6 @@ function backup () {
         [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_xdg_conf}" &> /dev/null || cp -rf "${HOME}/.config/${dots_xdg_conf}" "${DEFAULT_BACKUP_FOLDER}/.config" &> /dev/null
         cp -rf "${HOME}/.config/${dots_xdg_conf}" "${BACKUP_FOLDER}/.config" &> /dev/null
     done
-
-    [[ ${has_backup} = true ]] && update_git_backup "Update" || create_git_backup "Backup"
 }
 
 
@@ -102,7 +99,7 @@ function create_git_backup () {
     if [ -x "$(command -v git)" ]; then
         cd "${BACKUP_FOLDER}" || exit
         git init &> /dev/null
-        update_git_backup $1
+        update_git_backup
     fi
 }
 
@@ -115,7 +112,7 @@ function update_git_backup () {
         cd "${BACKUP_FOLDER}" || exit
         git add -u &> /dev/null
         git add . &> /dev/null
-        git commit -m "${1} config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
+        git commit -m "Update config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
     fi
 }
 
