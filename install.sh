@@ -1,18 +1,15 @@
 #!/usr/bin/env bash
 
-#
-# Variables
-#
-BACKUP_FOLDER="${HOME}/.local/.dotfiles.backup"
-DEFAULT_BACKUP_FOLDER="${BACKUP_FOLDER}/.backup.default"
-SCRIPT_FOLDER="$( cd "$(dirname "${0}")" >/dev/null 2>&1 ; pwd -P )"
+# YOU CAN CHANGE
 TO_HOME_FOLDER=(.zshrc)
 TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst icons nvim picom ranger redshift scripts wallpaper zsh)
 
+# DO NOT CHANGE
+BACKUP_FOLDER="${HOME}/.local/.dotfiles.backup"
+DEFAULT_BACKUP_FOLDER="${BACKUP_FOLDER}/.backup.default"
+SCRIPT_FOLDER="$( cd "$(dirname "${0}")" >/dev/null 2>&1 ; pwd -P )"
 
-#
-# Anti ROOT
-#
+
 function anti_root () {
     if [[ ${EUID} -eq 0 ]]; then
         local RED='\033[0;31m'; local BOLD='\033[1m'; local RESET='\033[0m'
@@ -21,9 +18,6 @@ function anti_root () {
 }
 
 
-#
-# Install dotfiles
-#
 function install_dotfiles () {
     backup
 
@@ -42,9 +36,6 @@ function install_dotfiles () {
 }
 
 
-#
-# Uninstall dotfiles
-#
 function uninstall_dotfiles () {
     [[ ! -f "${BACKUP_FOLDER}/check-backup.txt" ]] && echo "You have not installed this dotfiles yet." >&2 && exit 1
 
@@ -60,6 +51,7 @@ function uninstall_dotfiles () {
         rm -rf "${DEFAULT_BACKUP_FOLDER}/.config/${dots_xdg_conf}" &> /dev/null
     done
 
+    _update_git_backup
     rm -rf "${BACKUP_FOLDER}/check-backup.txt" &> /dev/null
     rm -rf "${DEFAULT_BACKUP_FOLDER}" &> /dev/null
 
@@ -67,9 +59,6 @@ function uninstall_dotfiles () {
 }
 
 
-#
-# Create backup
-#
 function backup () {
     local has_backup=true
     [[ ! -f "${BACKUP_FOLDER}/check-backup.txt" ]] && has_backup=false
@@ -89,25 +78,18 @@ function backup () {
         [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_xdg_conf}" &> /dev/null || cp -rf "${HOME}/.config/${dots_xdg_conf}" "${DEFAULT_BACKUP_FOLDER}/.config" &> /dev/null
         cp -rf "${HOME}/.config/${dots_xdg_conf}" "${BACKUP_FOLDER}/.config" &> /dev/null
     done
+
+    [[ "${has_backup}" = false ]] && _create_git_backup || _update_git_backup
 }
 
-
-#
-# Create git backup
-#
-function create_git_backup () {
+function _create_git_backup () {
     if [ -x "$(command -v git)" ]; then
         cd "${BACKUP_FOLDER}" || exit
         git init &> /dev/null
-        update_git_backup
+        _update_git_backup
     fi
 }
-
-
-#
-# Update git backup
-#
-function update_git_backup () {
+function _update_git_backup () {
     if [ -x "$(command -v git)" ]; then
         cd "${BACKUP_FOLDER}" || exit
         git add -u &> /dev/null
@@ -117,10 +99,7 @@ function update_git_backup () {
 }
 
 
-#
-# Usage
-#
-function usage() {
+function usage () {
     local program_name
     program_name=${0##*/}
     cat <<EOF
@@ -133,9 +112,6 @@ EOF
 }
 
 
-#
-# Main
-#
 function main () {
 
     anti_root
