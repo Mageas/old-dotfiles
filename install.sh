@@ -3,8 +3,9 @@
 #
 # Variables
 #
-BACKUP_FOLDER="$HOME/.local/.dotfiles.backup"
-SCRIPT_FOLDER="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+BACKUP_FOLDER="${HOME}/.local/.dotfiles.backup"
+DEFAULT_BACKUP_FOLDER="${BACKUP_FOLDER}/.backup.default"
+SCRIPT_FOLDER="$( cd "$(dirname "${0}")" >/dev/null 2>&1 ; pwd -P )"
 TO_HOME_FOLDER=(.zshrc)
 TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst icons nvim picom ranger redshift scripts wallpaper zsh)
 
@@ -13,10 +14,9 @@ TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst icons nvim picom ranger redshift
 # Anti ROOT
 #
 function anti_root () {
-    if [[ $EUID -eq 0 ]]; then
-        local RED='\033[0;31m'; local BOLD='\033[1m'
-        printf "${RED}${BOLD}!! Please do not run this script as root !! \n" 1>&2
-        exit 1
+    if [[ ${EUID} -eq 0 ]]; then
+        local RED='\033[0;31m'; local BOLD='\033[1m'; local RESET='\033[0m'
+        printf "${RED}${BOLD}!! Please do not run this script as root !! ${RESET}\n" 1>&2; exit 1
     fi
 }
 
@@ -28,19 +28,17 @@ function install_dotfiles () {
     backup
 
     for dots_home in "${TO_HOME_FOLDER[@]}"; do
-        rm -rf "$HOME/${dots_home}" &> /dev/null
-        cp -rf "$SCRIPT_FOLDER/${dots_home}" "$HOME/" &> /dev/null
+        rm -rf "${HOME}/${dots_home}" &> /dev/null
+        cp -rf "${SCRIPT_FOLDER}/${dots_home}" "${HOME}/" &> /dev/null
     done
 
-    mkdir -p "$HOME/.config"
+    mkdir -p "${HOME}/.config"
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]}"; do
-        rm -rf "$HOME/.config/${dots_xdg_conf[*]//./}" &> /dev/null
-        cp -rf "$SCRIPT_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config/${dots_xdg_conf}" &> /dev/null
+        rm -rf "${HOME}/.config/${dots_xdg_conf[*]//./}" &> /dev/null
+        cp -rf "${SCRIPT_FOLDER}/.config/${dots_xdg_conf}" "${HOME}/.config/${dots_xdg_conf}" &> /dev/null
     done
 
-    echo -e "Your config is backed up in ${BACKUP_FOLDER}\n" >&2
-    echo -e "Please do not delete check-backup.txt in your backup folder." >&2
-    echo -e "It's used to backup and restore your old config." >&2
+    echo -e "Your config is backed up in ${BACKUP_FOLDER}\nPlease do not delete check-backup.txt in your backup folder.\nIt's used to backup and restore your old config." >&2
 }
 
 
@@ -48,29 +46,25 @@ function install_dotfiles () {
 # Uninstall dotfiles
 #
 function uninstall_dotfiles () {
-    if ! [[ -f "$BACKUP_FOLDER/check-backup.txt" ]]; then 
-        echo "You have not installed this dotfiles yet." >&2
-        exit 1
-    fi
+    [[ ! -f "${BACKUP_FOLDER}/check-backup.txt" ]] && echo "You have not installed this dotfiles yet." >&2 && exit 1
 
     for dots_home in "${TO_HOME_FOLDER[@]}"; do
-        rm -rf "$HOME/${dots_home}" &> /dev/null
-        cp -rf "$BACKUP_FOLDER/${dots_home}" "$HOME/" &> /dev/null
-        rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
+        rm -rf "${HOME}/${dots_home}" &> /dev/null
+        cp -rf "${DEFAULT_BACKUP_FOLDER}/${dots_home}" "${HOME}/" &> /dev/null
+        rm -rf "${DEFAULT_BACKUP_FOLDER}/${dots_home}" &> /dev/null
     done
 
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"; do
-        rm -rf "$HOME/.config/${dots_xdg_conf}" &> /dev/null
-        cp -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" "$HOME/.config" &> /dev/null
-        rm -rf "$BACKUP_FOLDER/.config/${dots_xdg_conf}" &> /dev/null
+        rm -rf "${HOME}/.config/${dots_xdg_conf}" &> /dev/null
+        cp -rf "${DEFAULT_BACKUP_FOLDER}/.config/${dots_xdg_conf}" "${HOME}/.config" &> /dev/null
+        rm -rf "${DEFAULT_BACKUP_FOLDER}/.config/${dots_xdg_conf}" &> /dev/null
     done
 
     update_git_backup "Restore"
-    rm -rf "$BACKUP_FOLDER/check-backup.txt" &> /dev/null
+    rm -rf "${BACKUP_FOLDER}/check-backup.txt" &> /dev/null
+    rm -rf "${DEFAULT_BACKUP_FOLDER}" &> /dev/null
 
-    echo "Your old config has been restored!" >&2
-    echo "Thanks for using my dotfiles." >&2
-    echo "Enjoy your next journey!" >&2
+    echo -e "Your old config has been restored!\nAll your dotfiles are saved in ${BACKUP_FOLDER}" >&2
 }
 
 
@@ -78,34 +72,27 @@ function uninstall_dotfiles () {
 # Create backup
 #
 function backup () {
-    local has_backup=True
-    if ! [[ -f "$BACKUP_FOLDER/check-backup.txt" ]]; then has_backup=False; fi
+    local has_backup=true
+    [[ ! -f "${BACKUP_FOLDER}/check-backup.txt" ]] && has_backup=false
 
-    if [[ $has_backup == False ]]; then 
-        mkdir -p "$BACKUP_FOLDER/.config" &> /dev/null
-        cd "$BACKUP_FOLDER" || exit
+    if [[ "${has_backup}" = false ]]; then 
+        mkdir -p "${BACKUP_FOLDER}/.config" &> /dev/null
+        cd "${BACKUP_FOLDER}" || exit
         touch check-backup.txt &> /dev/null
     fi
 
     for dots_home in "${TO_HOME_FOLDER[@]}"; do
-        if [[ $has_backup == True ]]; then 
-            rm -rf "$BACKUP_FOLDER/${dots_home}" &> /dev/null
-        fi
-        cp -rf "$SCRIPT_FOLDER/${dots_home}" "$BACKUP_FOLDER" &> /dev/null
+        [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_home}" &> /dev/null
+        cp -rf "${HOME}/${dots_home}" "${BACKUP_FOLDER}" &> /dev/null
     done
 
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"; do
-        if [[ $has_backup == True ]]; then 
-            rm -rf "$BACKUP_FOLDER/${dots_xdg_conf}" &> /dev/null
-        fi
-        cp -rf "$HOME/.config/${dots_xdg_conf}" "$BACKUP_FOLDER/.config" &> /dev/null
+        [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_xdg_conf}" &> /dev/null
+        cp -rf "${HOME}/.config/${dots_xdg_conf}" "${BACKUP_FOLDER}/.config" &> /dev/null
     done
 
-    if [[ $has_backup == False ]]; then
-        create_git_backup "Backup"
-    else
-        update_git_backup "Update"
-    fi
+    [[ ${has_backup} = false ]] && cp -rf "${BACKUP_FOLDER}" "${DEFAULT_BACKUP_FOLDER}" &> /dev/null || rm -rf "${DEFAULT_BACKUP_FOLDER}/.git" &> /dev/null
+    [[ ${has_backup} = false ]] && create_git_backup "Backup" || update_git_backup "Update"
 }
 
 
@@ -114,7 +101,7 @@ function backup () {
 #
 function create_git_backup () {
     if [ -x "$(command -v git)" ]; then
-        cd "$BACKUP_FOLDER" || exit
+        cd "${BACKUP_FOLDER}" || exit
         git init &> /dev/null
         update_git_backup $1
     fi
@@ -126,10 +113,10 @@ function create_git_backup () {
 #
 function update_git_backup () {
     if [ -x "$(command -v git)" ]; then
-        cd "$BACKUP_FOLDER" || exit
+        cd "${BACKUP_FOLDER}" || exit
         git add -u &> /dev/null
         git add . &> /dev/null
-        git commit -m "$1 config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
+        git commit -m "${1} config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
     fi
 }
 
@@ -137,7 +124,7 @@ function update_git_backup () {
 #
 # Usage
 #
-usage() {
+function usage() {
     local program_name
     program_name=${0##*/}
     cat <<EOF
@@ -157,10 +144,9 @@ function main () {
 
     anti_root
 
-    case "$1" in
+    case "${1}" in
         ''|-h|--help)
-            usage
-            exit 0
+            usage; exit 0
             ;;
         -i)
             install_dotfiles
@@ -169,11 +155,9 @@ function main () {
             uninstall_dotfiles
             ;;
         *)
-            echo "Invalids arguments ($@)"
-            usage
-            exit 1
+            echo "Invalids arguments (${@})"; usage; exit 1
     esac
 }
 
 
-main "$@"
+main "${@}"
