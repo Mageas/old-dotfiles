@@ -92,8 +92,8 @@ function _create_git_backup () {
 function _update_git_backup () {
     if [ -x "$(command -v git)" ]; then
         cd "${BACKUP_FOLDER}" || exit
-        git add -u &> /dev/null
         git add . &> /dev/null
+        git add -A &> /dev/null
         git commit -m "Update config on $(date '+%Y-%m-%d %H:%M')" &> /dev/null
     fi
 }
