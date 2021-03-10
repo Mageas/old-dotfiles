@@ -76,23 +76,22 @@ function backup () {
     [[ ! -f "${BACKUP_FOLDER}/check-backup.txt" ]] && has_backup=false
 
     if [[ "${has_backup}" = false ]]; then 
-        mkdir -p "${BACKUP_FOLDER}/.config" &> /dev/null
+        mkdir -p "${BACKUP_FOLDER}/.config" &> /dev/null; mkdir -p "${DEFAULT_BACKUP_FOLDER}/.config" &> /dev/null
         cd "${BACKUP_FOLDER}" || exit
         touch check-backup.txt &> /dev/null
     fi
 
     for dots_home in "${TO_HOME_FOLDER[@]}"; do
-        [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_home}" &> /dev/null
+        [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_home}" &> /dev/null || cp -rf "${HOME}/${dots_home}" "${DEFAULT_BACKUP_FOLDER}" &> /dev/null
         cp -rf "${HOME}/${dots_home}" "${BACKUP_FOLDER}" &> /dev/null
     done
 
     for dots_xdg_conf in "${TO_XDG_CONFIG_FOLDER[@]//./}"; do
-        [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_xdg_conf}" &> /dev/null
+        [[ "${has_backup}" = true ]] && rm -rf "${BACKUP_FOLDER}/${dots_xdg_conf}" &> /dev/null || cp -rf "${HOME}/.config/${dots_xdg_conf}" "${DEFAULT_BACKUP_FOLDER}/.config" &> /dev/null
         cp -rf "${HOME}/.config/${dots_xdg_conf}" "${BACKUP_FOLDER}/.config" &> /dev/null
     done
 
-    [[ ${has_backup} = false ]] && cp -rf "${BACKUP_FOLDER}" "${DEFAULT_BACKUP_FOLDER}" &> /dev/null || rm -rf "${DEFAULT_BACKUP_FOLDER}/.git" &> /dev/null
-    [[ ${has_backup} = false ]] && create_git_backup "Backup" || update_git_backup "Update"
+    [[ ${has_backup} = true ]] && update_git_backup "Update" || create_git_backup "Backup"
 }
 
 
