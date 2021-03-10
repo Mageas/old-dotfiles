@@ -6,11 +6,7 @@ mute=$(pamixer --get-mute)
 if [ "$mute" = true ]; then
     return="ﱝ muted"
 else
-    if [ "$volume" -gt 49 ]; then
-        return=" $volume%"
-    else
-        return="墳 $volume%"
-    fi
+    [[ "$volume" -gt 49 ]] && return=" $volume%" || return="墳 $volume%"
 fi
 
 echo "[$return]"

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 declare -a options=("shutdown
-reboot")
+reboot
+lock")
 
 choice=$(echo -e "${options[@]}" | dmenu -p "Follow your heart!")
 
@@ -11,5 +12,8 @@ case "$choice" in
     ;;
     reboot)
         reboot
+    ;;
+    lock)
+        slock
     ;;
 esac
