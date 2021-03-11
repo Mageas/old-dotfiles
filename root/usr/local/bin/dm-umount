@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+declare -a system_drives=("/dev/nvme0n1"
+"/dev/nvme1n1")
+
+umountable=$(lsblk -lp | grep -e "part" | grep -Ev "part $" | awk '{print $1, "[" $7 "]", "(" $4 ")"}')
+[[ -n ${system_drives} ]] && umountable=$(echo "${umountable}" | grep -Ev "$(echo ${system_drives[@]} | sed "s/\s/|/g")")
+[[ -z ${umountable} ]] && exit 1
+
+chosen=$(echo "${umountable}" | dmenu -l 20 -p "Which drive to umount?" | awk '{print $1}')
+[[ -z ${chosen} ]] && exit 1
+
+sudo_password=$(dmenu -P -p "Enter your password: ")
+
+echo -n ${sudo_password} | sudo --stdin umount ${chosen} && notify-send "${chosen} is umounted" || notify-send "Cannot umount ${chosen}"
