@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+password=$(dmenu -P -p "Enter your password: ")
+
+declare -a system_drives=("/dev/nvme0n1"
+"/dev/nvme1n1")
+
+mountable=$(lsblk -lp | grep -e "part $" | awk '{print $1, "(" $4 ")"}')
+[[ -n ${system_drives} ]] && mountable=$(echo "${mountable}" | grep -Ev "$(echo ${system_drives[@]} | sed "s/\s/|/g")")
+[[ -z ${mountable} ]] && exit 1
+
+chosen=$(echo "${mountable}" | dmenu -p "Which drive to mount?" | awk '{print $1}')
+[[ -z ${chosen} ]] && exit 1
+
+dirs=$(find /mnt /media /mount /home -type d -maxdepth 3 2>/dev/null)
+mountpoint=$(echo "${dirs}" | dmenu -p "Mount point?")
+[[ -z ${mountpoint} ]] && exit 1
+
+if [[ ! -d ${mountpoint} ]]; then
+    createdir=$(echo -e "Yes\nNo" | dmenu -p "${mountpoint} does not exist, create it?")
+    [[ "${createdir}" = Yes ]] && echo -n ${password} | sudo --stdin mkdir -p "${mountpoint}"
+fi
+
+echo -n ${password} | sudo --stdin mount ${chosen} ${mountpoint} && notify-send "${chosen} mounted to ${mountpoint}" || notify-send "Cannot mount ${chosen} to ${mountpoint}"

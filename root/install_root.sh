@@ -16,7 +16,7 @@ function set_variables_from_args () {
             NO_CONFIRM=True
         ;;
         *)
-            
+            exit 1
         ;;
     esac
 }
