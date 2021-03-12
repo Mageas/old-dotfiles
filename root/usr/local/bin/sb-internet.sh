@@ -1,61 +1,37 @@
-#!/bin/bash
+#!/bin/sh
 
 INTERVAL=10
-INTERFACES="enp5s0"
+INTERFACE="enp5s0"
 
-test_interface=$(ip addr show | grep ${INTERFACES})
+test_interface=$(ip addr show | grep ${INTERFACE})
 [ "${test_interface}" = "" ] && echo "[ Unknow]" && exit 1
 
 print_bytes() {
-    if [ "$1" -eq 0 ] || [ "$1" -lt 1000 ]; then
+    if [ "${1}" -eq 0 ] || [ "${1}" -lt 1000 ]; then
         bytes="0kB"
-    elif [ "$1" -lt 1000000 ]; then
-        bytes="$(echo "scale=0;$1/1000" | bc -l )kB"
+    elif [ "${1}" -lt 1000000 ]; then
+        bytes="$(echo "scale=0;${1}/1000" | bc -l )kB"
     else
-        bytes="$(echo "scale=1;$1/1000000" | bc -l )MB"
+        bytes="$(echo "scale=1;${1}/1000000" | bc -l )MB"
     fi
 
-    echo "$bytes"
+    echo "${bytes}"
 }
 
-print_bit() {
-    if [ "$1" -eq 0 ] || [ "$1" -lt 10 ]; then
-        bit="0 B"
-    elif [ "$1" -lt 100 ]; then
-        bit="$(echo "scale=0;$1*8" | bc -l ) B"
-    elif [ "$1" -lt 100000 ]; then
-        bit="$(echo "scale=0;$1*8/1000" | bc -l ) K"
-    else
-        bit="$(echo "scale=1;$1*8/1000000" | bc -l ) M"
-    fi
-
-    echo "$bit"
-}
-
-declare -A bytes
-
-for interface in $INTERFACES; do
-    bytes[past_rx_$interface]="$(cat /sys/class/net/"$interface"/statistics/rx_bytes)"
-    bytes[past_tx_$interface]="$(cat /sys/class/net/"$interface"/statistics/tx_bytes)"
-done
+ORX="$(cat /sys/class/net/"${INTERFACE}"/statistics/rx_bytes)"
+OTX="$(cat /sys/class/net/"${INTERFACE}"/statistics/tx_bytes)"
 
 sleep 0.1s
-
 down=0
 up=0
 
-for interface in $INTERFACES; do
-    bytes[now_rx_$interface]="$(cat /sys/class/net/"$interface"/statistics/rx_bytes)"
-    bytes[now_tx_$interface]="$(cat /sys/class/net/"$interface"/statistics/tx_bytes)"
+NRX="$(cat /sys/class/net/"${INTERFACE}"/statistics/rx_bytes)"
+NTX="$(cat /sys/class/net/"${INTERFACE}"/statistics/tx_bytes)"
 
-    bytes_down=$((((${bytes[now_rx_$interface]} - ${bytes[past_rx_$interface]})) * $INTERVAL))
-    bytes_up=$((((${bytes[now_tx_$interface]} - ${bytes[past_tx_$interface]})) * $INTERVAL))
+bytes_down=$(((( ${NRX} - ${ORX} )) * ${INTERVAL} ))
+bytes_up=$(((( ${NTX} - ${OTX} )) * ${INTERVAL} ))
 
-    down=$(((( "$down" + "$bytes_down" ))))
-    up=$(((( "$up" + "$bytes_up" ))))
+down=$(( ${down} + ${bytes_down} ))
+up=$(( ${up} + ${bytes_up} ))
 
-    bytes[past_rx_$interface]=${bytes[now_rx_$interface]}
-    bytes[past_tx_$interface]=${bytes[now_tx_$interface]}
-done
-
-echo "[$(print_bytes $down) $(print_bytes $up)]"
+echo "[$(print_bytes ${down}) $(print_bytes ${up})]"
