@@ -1,23 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+options="mpv
+vlc"
 
 CLIPBOARD="$(xsel -b)"
-
-if [[ ${#CLIPBOARD} -gt 30 ]]; then
-    visual="${CLIPBOARD:0:20}"..."${CLIPBOARD: -7}"
+if [ ${#CLIPBOARD} -gt 30 ]; then
+    visual="$(echo ${CLIPBOARD} | cut -c1-20)...$(echo ${CLIPBOARD} | cut -c$((${#CLIPBOARD} - 7))-)"
 else
-    visual="$CLIPBOARD"
+    visual="${CLIPBOARD}"
 fi
 
-declare -a options=("mpv
-vlc")
+choice=$(echo "${options}" | dmenu -p "How to open ${visual} ?")
 
-choice=$(echo -e "${options[@]}" | dmenu -p "How to open $visual ?")
-
-case "$choice" in
-    "mpv")
-        mpv $CLIPBOARD
+case "${choice}" in
+    mpv)
+        mpv ${CLIPBOARD}
         ;;
-    "vlc")
-        vlc $CLIPBOARD
+    vlc)
+        vlc ${CLIPBOARD}
         ;;
 esac
