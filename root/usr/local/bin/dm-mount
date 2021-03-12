@@ -1,24 +1,49 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-declare -a system_drives=("/dev/nvme0n1"
-"/dev/nvme1n1")
+# List of drives not to be displayed
+system_drives="/dev/nvme0n1
+/dev/nvme1n1"
 
-mountable=$(lsblk -lp | grep -e "part $" | awk '{print $1, "(" $4 ")"}')
-[[ -n ${system_drives} ]] && mountable=$(echo "${mountable}" | grep -Ev "$(echo ${system_drives[@]} | sed "s/\s/|/g")")
-[[ -z ${mountable} ]] && exit 1
+get_mountable_devices () {
+    mountable=$(lsblk -lp | grep -e "part $" | awk '{print $1, "(" $4 ")"}')
+    [ "${system_drives}" ] && mountable=$(echo "${mountable}" | grep -Ev "$(echo ${system_drives} | sed "s/\s/|/g")")
+    [ -z "${mountable}" ] && exit 1
+}
 
-chosen=$(echo "${mountable}" | dmenu -l 20 -p "Which drive to mount?" | awk '{print $1}')
-[[ -z ${chosen} ]] && exit 1
+get_mountpoint () {
+    chosen=$(echo "${mountable}" | dmenu -l 20 -p "Which drive to mount?" | awk '{print $1}')
+    [ -z "${chosen}" ] && exit 1
 
-dirs=$(find /mnt /media /mount /home -type d -maxdepth 3 2>/dev/null)
-mountpoint=$(echo "${dirs}" | dmenu -l 20 -p "Mount point?")
-[[ -z ${mountpoint} ]] && exit 1
+    dirs=$(find /mnt /media /mount /home -type d -maxdepth 3 2>/dev/null)
+    mountpoint=$(echo "${dirs}" | dmenu -l 20 -p "Mount point?")
+    [ -z "${mountpoint}" ] && exit 1
+}
 
-sudo_password=$(dmenu -P -p "Enter your password: ")
+get_sudo_password () {
+    sudo_password=$(dmenu -P -p "Enter your password: ")
+}
 
-if [[ ! -d ${mountpoint} ]]; then
-    createdir=$(echo -e "Yes\nNo" | dmenu -p "${mountpoint} does not exist, create it?")
-    [[ "${createdir}" = Yes ]] && echo -n ${sudo_password} | sudo --stdin mkdir -p "${mountpoint}"
-fi
+check_mountpoint () {
+    if [ ! -d "${mountpoint}" ]; then
+        createdir=$(echo -e "Yes\nNo" | dmenu -p "${mountpoint} does not exist, create it?")
+        [ "${createdir}" = Yes ] && echo -n ${sudo_password} | sudo --stdin mkdir -p "${mountpoint}"
+    fi
+}
 
-echo -n ${sudo_password} | sudo --stdin mount ${chosen} ${mountpoint} && notify-send "${chosen} mounted to ${mountpoint}" || notify-send "Cannot mount ${chosen} to ${mountpoint}"
+mount_device () {
+    echo -n ${sudo_password} | sudo --stdin mount ${chosen} ${mountpoint} && notify-send "${chosen} mounted to ${mountpoint}" || notify-send "Cannot mount ${chosen} to ${mountpoint}"
+}
+
+main () {
+    get_mountable_devices
+
+    get_mountpoint
+
+    get_sudo_password
+
+    check_mountpoint
+
+    mount_device
+}
+
+main
