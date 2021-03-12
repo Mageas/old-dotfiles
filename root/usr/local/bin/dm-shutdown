@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-declare -a options=("shutdown
+options="shutdown
 reboot
-lock")
+lock"
 
-choice=$(echo -e "${options[@]}" | dmenu -p "Follow your heart!")
+choice=$(echo "${options}" | dmenu -p "Follow your heart!")
 
-case "$choice" in
+case "${choice}" in
     shutdown)
         shutdown now
     ;;
