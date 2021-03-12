@@ -1,14 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 DEVICE_NAME=$(pactl info | grep "Default Sink:" | sed -r "s/.+ (.+)/\1/")
-SINK=$(pamixer --list-sinks | grep "$DEVICE_NAME" | sed -r "s/([0-9]+).+/\1/")
+SINK=$(pamixer --list-sinks | grep "${DEVICE_NAME}" | sed -r "s/([0-9]+).+/\1/")
 
-case "$1" in
+case "${1}" in
     toggle)
-        /usr/bin/pactl set-sink-mute $SINK toggle
+        /usr/bin/pactl set-sink-mute ${SINK} toggle
         ;;
     set=*)
-        volume=`echo $1 | sed 's/[-a-zA-Z0-9]*=//'`
-        /usr/bin/pactl set-sink-volume $SINK $volume
+        volume=`echo ${1} | sed 's/[-a-zA-Z0-9]*=//'`
+        /usr/bin/pactl set-sink-volume ${SINK} ${volume}
         ;;
 esac
