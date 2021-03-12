@@ -1,5 +1,11 @@
 #!/bin/bash
 
+INTERVAL=10
+INTERFACES="enp5s0"
+
+test_interface=$(ip addr show | grep ${INTERFACES})
+[ "${test_interface}" = "" ] && echo "[ Unknow]" && exit 1
+
 print_bytes() {
     if [ "$1" -eq 0 ] || [ "$1" -lt 1000 ]; then
         bytes="0kB"
@@ -25,9 +31,6 @@ print_bit() {
 
     echo "$bit"
 }
-
-INTERVAL=10
-INTERFACES="enp0s3"
 
 declare -A bytes
 
@@ -56,4 +59,3 @@ for interface in $INTERFACES; do
 done
 
 echo "[$(print_bytes $down) $(print_bytes $up)]"
-# echo "Download: $(print_bit $down) / Upload: $(print_bit $up)"
