@@ -19,5 +19,5 @@ feh --bg-fill /home/$USER/.config/wallpaper/wallpaper.jpg &
 redshift &
 
 # Applications
-firefox &
+librewolf &
 discord &
