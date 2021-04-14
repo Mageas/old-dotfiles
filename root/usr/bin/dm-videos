@@ -3,7 +3,7 @@
 options="mpv
 vlc"
 
-CLIPBOARD="$(xsel -b)"
+CLIPBOARD="$(xclip -o)"
 if [ ${#CLIPBOARD} -gt 30 ]; then
     visual="$(echo ${CLIPBOARD} | cut -c1-20)...$(echo ${CLIPBOARD} | cut -c$((${#CLIPBOARD} - 7))-)"
 else
