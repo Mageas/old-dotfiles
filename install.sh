@@ -2,7 +2,7 @@
 
 # YOU CAN CHANGE
 TO_HOME_FOLDER=(.zshrc)
-TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst icons nvim picom ranger redshift scripts wallpaper zsh)
+TO_XDG_CONFIG_FOLDER=(alacritty autostart dunst icons mpv nvim picom ranger redshift scripts wallpaper zsh)
 
 # DO NOT CHANGE
 BACKUP_FOLDER="${HOME}/.local/.dotfiles.backup"
