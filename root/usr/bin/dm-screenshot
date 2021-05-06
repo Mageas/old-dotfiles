@@ -11,7 +11,7 @@ case "${choice}" in
         notify-send -i ${HOME}/.config/icons/screenshot_ico.png "Screenshot" "You're the best photographer I've ever seen."
     ;;
     selection)
-        maim -s | xclip -selection clipboard -t image/png
+        maim -s -u | xclip -selection clipboard -t image/png
         notify-send -i ${HOME}/.config/icons/screenshot_ico.png "Screenshot" "You're the best photographer I've ever seen."
     ;;
 esac
