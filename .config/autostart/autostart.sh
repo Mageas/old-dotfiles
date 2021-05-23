@@ -6,6 +6,9 @@ xrandr --output DP-4 --mode "1920x1080" --rate 160 --output DP-1 --mode "1280x10
 # Compositor
 picom &
 
+# Screen saver
+xset s off -dpms
+
 # Status bar
 dwmblocks &
 
