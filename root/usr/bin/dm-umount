@@ -8,7 +8,7 @@ umountable=$(lsblk -lp | grep -e "part" | grep -Ev "part $" | awk '{print $1, "[
 [ -n "${system_drives}" ] && umountable=$(echo "${umountable}" | grep -Ev "$(echo ${system_drives} | sed "s/\s/|/g")")
 [ -z "${umountable}" ] && exit 1
 
-chosen=$(echo "${umountable}" | dmenu -l 20 -p "Which drive to umount?" | awk '{print $1}')
+chosen=$(echo "${umountable}" | dmenu -i -l 20 -p "Which drive to umount?" | awk '{print $1}')
 [ -z "${chosen}" ] && exit 1
 
 sudo_password=$(dmenu -P -p "Enter your password: ")

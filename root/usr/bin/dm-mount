@@ -8,17 +8,17 @@ mountable=$(lsblk -lp | grep -e "part $" | awk '{print $1, "(" $4 ")"}')
 [ "${system_drives}" ] && mountable=$(echo "${mountable}" | grep -Ev "$(echo ${system_drives} | sed "s/\s/|/g")")
 [ -z "${mountable}" ] && exit 1
 
-chosen=$(echo "${mountable}" | dmenu -l 20 -p "Which drive to mount?" | awk '{print $1}')
+chosen=$(echo "${mountable}" | dmenu -i -l 20 -p "Which drive to mount?" | awk '{print $1}')
 [ -z "${chosen}" ] && exit 1
 
 dirs=$(find /mnt /media /mount /home -type d -maxdepth 3 2>/dev/null)
-mountpoint=$(echo "${dirs}" | dmenu -l 20 -p "Mount point?")
+mountpoint=$(echo "${dirs}" | dmenu -i -l 20 -p "Mount point?")
 [ -z "${mountpoint}" ] && exit 1
 
 sudo_password=$(dmenu -P -p "Enter your password: ")
 
 if [ ! -d "${mountpoint}" ]; then
-    createdir=$(echo -e "Yes\nNo" | dmenu -p "${mountpoint} does not exist, create it?")
+    createdir=$(echo -e "Yes\nNo" | dmenu -i -p "${mountpoint} does not exist, create it?")
     [ "${createdir}" = Yes ] && echo -n ${sudo_password} | sudo --stdin mkdir -p "${mountpoint}"
 fi
 

@@ -3,7 +3,7 @@
 options="window
 selection"
 
-choice=$(echo "${options}" | dmenu -p "Which capture do you want?")
+choice=$(echo "${options}" | dmenu -i -p "Which capture do you want?")
 
 case "${choice}" in
     window)

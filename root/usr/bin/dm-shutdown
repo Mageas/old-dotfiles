@@ -4,7 +4,7 @@ options="shutdown
 reboot
 lock"
 
-choice=$(echo "${options}" | dmenu -p "Follow your heart!")
+choice=$(echo "${options}" | dmenu -i -p "Follow your heart!")
 
 case "${choice}" in
     shutdown)

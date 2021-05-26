@@ -10,7 +10,7 @@ else
     visual="${CLIPBOARD}"
 fi
 
-choice=$(echo "${options}" | dmenu -p "How to open ${visual} ?")
+choice=$(echo "${options}" | dmenu -i -p "How to open ${visual} ?")
 
 case "${choice}" in
     mpv)
