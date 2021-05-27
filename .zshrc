@@ -13,7 +13,7 @@ bindkey '^[[3;5~' kill-word
 bindkey '^[[3~' delete-char
 
 # PATH
-export PATH=$PATH:$HOME/.config/scripts:$HOME/.config/scripts/statusbar
+export PATH=$PATH:$HOME/.config/scripts:$HOME/.config/scripts/statusbar:$HOME/.local/bin
 
 # History in cache directory:
 HISTSIZE=10000000
