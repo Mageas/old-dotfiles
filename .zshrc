@@ -167,6 +167,9 @@ alias dps="docker ps"
 alias dpsa="docker ps -a"
 alias di="docker images"
 
+# SSH
+alias ssh="TERM=linux ssh"
+
 
 ### RANDOM COLOR SCRIPT ###
 # Get this script from dt's GitLab: gitlab.com/dwt1/shell-color-scripts
