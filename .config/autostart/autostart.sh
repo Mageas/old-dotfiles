@@ -24,3 +24,4 @@ redshift &
 # Applications
 librewolf &
 discord &
+easyeffects &
