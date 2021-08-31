@@ -163,6 +163,9 @@ alias di="docker images"
 # SSH
 alias ssh="TERM=linux ssh"
 
+# VIM 
+alias vim="nvim"
+
 
 ### RANDOM COLOR SCRIPT ###
 # Get this script from dt's GitLab: gitlab.com/dwt1/shell-color-scripts
