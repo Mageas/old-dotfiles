@@ -21,6 +21,9 @@ feh --bg-fill /home/$USER/.config/wallpaper/wallpaper.jpg &
 # Redshift
 redshift &
 
+# Sxhkd
+sxhkd &
+
 # Applications
 librewolf &
 discord &

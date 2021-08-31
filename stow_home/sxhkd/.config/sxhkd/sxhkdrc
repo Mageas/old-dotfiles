@@ -1,0 +1,23 @@
+alt + F1
+	dm-screenshot
+
+alt + F2
+	dm-videos
+
+alt + F9
+	dm-mount
+
+alt + F10
+	dm-umount
+
+alt + F12
+	dm-shutdown
+
+F10
+	dwm-volume toggle; kill -44 $(pidof dwmblocks)
+
+F11
+	dwm-volume set=-2%; kill -44 $(pidof dwmblocks)
+
+F12
+	dwm-volume set=+2%; kill -44 $(pidof dwmblocks)
