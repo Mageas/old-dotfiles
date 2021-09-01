@@ -1,0 +1,24 @@
+#!/usr/bin/python3
+import sys
+import json
+
+with open(sys.argv[1]) as f:
+    d = json.load(f)
+
+o = []
+
+for s in d['subscriptions']:
+    o.append({
+        "kind": "youtube#subscription",
+        "snippet": {
+            "resourceId": {
+                "channelId": s['url'].split('/')[-1],
+                "kind": "youtube#channel"
+            },
+            "tags": [],
+            "title": s['name']
+        }
+    })
+
+with open(f"{'.'.join(str(sys.argv[1]).split('.')[:-1])}_convert.json", "w") as of:
+    json.dump(o, of)
