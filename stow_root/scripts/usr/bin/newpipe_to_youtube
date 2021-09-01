@@ -2,7 +2,7 @@
 import sys
 import json
 
-with open(sys.argv[1]) as f:
+with open(sys.argv[1], encoding='utf-8') as f:
     d = json.load(f)
 
 o = []
@@ -20,5 +20,5 @@ for s in d['subscriptions']:
         }
     })
 
-with open(f"{'.'.join(str(sys.argv[1]).split('.')[:-1])}_convert.json", "w") as of:
-    json.dump(o, of)
+with open(f"{'.'.join(str(sys.argv[1]).split('.')[:-1])}_convert.json", "w", encoding='utf-8') as of:
+    json.dump(o, of, ensure_ascii=False)
