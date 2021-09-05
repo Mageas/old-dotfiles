@@ -166,6 +166,9 @@ alias ssh="TERM=linux ssh"
 # VIM 
 alias vim="nvim"
 
+# YOUTUBE-DL
+alias youtube-dl-audio="youtube-dl --config-location ~/.config/youtube-dl/audio"
+
 
 ### RANDOM COLOR SCRIPT ###
 # Get this script from dt's GitLab: gitlab.com/dwt1/shell-color-scripts
