@@ -173,4 +173,7 @@ alias youtube-dl-audio="youtube-dl --config-location ~/.config/youtube-dl/audio"
 ### RANDOM COLOR SCRIPT ###
 # Get this script from dt's GitLab: gitlab.com/dwt1/shell-color-scripts
 # Or install it from the Arch User Repository: shell-color-scripts
-sh-colorscript random
+# sh-colorscript random
+
+# Spark
+echo; echo; seq 1 $(tput cols) | sort -R | spark | lolcat; echo; echo;
