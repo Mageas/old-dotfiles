@@ -163,9 +163,6 @@ alias di="docker images"
 # SSH
 alias ssh="TERM=linux ssh"
 
-# VIM 
-alias vim="nvim"
-
 # YOUTUBE-DL
 alias youtube-dl-audio="youtube-dl --config-location ~/.config/youtube-dl/audio"
 
