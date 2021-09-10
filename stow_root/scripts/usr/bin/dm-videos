@@ -1,7 +1,6 @@
 #!/bin/sh
 
-options="mpv
-vlc"
+options="mpv"
 
 CLIPBOARD="$(xclip -o)"
 if [ ${#CLIPBOARD} -gt 30 ]; then
@@ -15,8 +14,5 @@ choice=$(echo "${options}" | dmenu -i -p "How to open ${visual} ?")
 case "${choice}" in
     mpv)
         mpv ${CLIPBOARD}
-        ;;
-    vlc)
-        vlc ${CLIPBOARD}
         ;;
 esac
