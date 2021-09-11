@@ -1,45 +1,51 @@
 # navigation
-alias ..='cd ..' 
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
- 
-# Colorize grep output (good for log files)
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
+alias \
+        ..='cd ..' \
+        ...='cd ../..' \
+        .3='cd ../../..' \
+        .4='cd ../../../..' \
+        .5='cd ../../../../..'
 
-# Colorize ls
-alias ls='ls --color=auto'
- 
+# Colorize
+alias \
+        grep='grep --color=auto' \
+        egrep='egrep --color=auto' \
+        fgrep='fgrep --color=auto' \
+        ls='ls -hN --color=auto --group-directories-first'
+
 # Confirm before overwriting something
-alias cp="cp -i"
-alias mv='mv -i'
-alias rm='rm -i'
+alias \
+        cp="cp -iv" \
+        mv="mv -iv" \
+        rm="rm -vI" \
+        mkd="mkdir -pv"
 
 # Git
-alias gs="git status"
-alias gb="git branch"
-alias gl="git log"
-alias gf="git fetch"
-
-alias ga="git add"
-alias gaa="git add -A"
-alias gc="git commit -m"
-alias gp="git push"
-
-alias gcom="git checkout master"
-alias gco="git checkout"
+alias \
+        gs="git status" \
+        gsd="git status -vv" \
+        gb="git branch" \
+        gl="git log" \
+        gf="git fetch" \
+        ga="git add" \
+        gaa="git add -A" \
+        gc="git commit -m" \
+        gp="git push" \
+        gcom="git checkout master" \
+        gco="git checkout"
 
 # Docker
-alias dc="docker-compose"
-alias dps="docker ps"
-alias dpsa="docker ps -a"
-alias di="docker images"
+alias \
+        dc="docker-compose" \
+        dps="docker ps" \
+        dpsa="docker ps -a" \
+        di="docker images"
 
 # SSH
-alias ssh="TERM=linux ssh"
+alias \
+        ssh="TERM=linux ssh"
 
 # YOUTUBE-DL
-alias youtube-dl-audio="youtube-dl --config-location ~/.config/youtube-dl/audio"
+alias \
+        yt="youtube-dl" \
+        yta="youtube-dl --config-location ~/.config/youtube-dl/audio"
