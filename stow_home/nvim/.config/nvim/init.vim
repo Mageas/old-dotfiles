@@ -2,12 +2,17 @@
 
 call plug#begin('~/.config/nvim/plugged')
 
-"{{ The Basics }}
-    Plug 'itchyny/lightline.vim'                       " Lightline statusbar
-"{{ File management }}
-    Plug 'scrooloose/nerdtree'                         " Nerdtree
-"{{ Theme }}
-    Plug 'dracula/vim'                                 " Dracula
+"{{ dev }}
+    Plug 'luochen1990/rainbow'
+"{{ lsp }}
+    Plug 'neovim/nvim-lspconfig'
+"{{ rust dev }}
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"{{ fime management }}
+    Plug 'scrooloose/nerdtree'
+"{{ ui }}
+    Plug 'dracula/vim'
+    Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
@@ -71,6 +76,14 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=38
 
+autocmd FileType nerdtree nmap l <Enter>
+
+" }}}
+
+" luochen1990/rainbow {{{
+
+let g:rainbow_active = 1
+
 " }}}
 
 " colors {{{
@@ -83,11 +96,13 @@ colorscheme dracula
 
 " }}}
 
-" general{{{
+" general {{{
 
 set clipboard=unnamedplus
 set nobackup
 set noswapfile
+
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " }}}
 
@@ -100,12 +115,35 @@ set expandtab
 
 " }}}
 
-" find {{{
+" files {{{
 
 set path+=**
 set wildmenu
-set wildignore+=**/node_modules/** 
+set wildmode=longest:full,full
 set hidden
+
+" }}}
+
+" split {{{
+
+set splitbelow
+set splitright
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H> 
+
+" files {{{
+
+set path+=**
+set wildmenu
+set wildmode=longest:full,full
+set wildignorecase
+set wildignore=*.git/*
+set hidden
+
+cnoremap <expr> / wildmenumode() ? "\<C-Y>" : "/"
 
 " }}}
 
@@ -123,18 +161,18 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+nnoremap S :%s//g<Left><Left>
+
 "}}}
 
 " ui {{{
 
-let mapleader=","
 set number
 set relativenumber
 set modelines=1
 set showcmd
 set cursorline
 set showmatch
-set cmdheight=2
 set signcolumn=yes
 set updatetime=50
 set shortmess+=c
@@ -144,6 +182,17 @@ set shortmess+=c
 " remap {{{
 
 :imap ii <Esc>
-map <Space> <Leader>
+
+let mapleader = ","
+let g:mapleader = ","
+
+nnoremap x "_x
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+
+nnoremap <leader>d "+d
+nnoremap <leader>D "+D
+vnoremap <leader>d "+d
 
 " }}}
