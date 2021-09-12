@@ -18,7 +18,7 @@ alias \
         cp="cp -iv" \
         mv="mv -iv" \
         rm="rm -vI" \
-        mkd="mkdir -pv"
+        mkdir="mkdir -pv"
 
 # Git
 alias \

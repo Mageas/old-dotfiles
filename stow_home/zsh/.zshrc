@@ -29,9 +29,9 @@ prompt spaceship
 # gitlab.com/dwt1/shell-color-scripts
 # sh-colorscript random
 
-# Spark
-echo; echo; seq 1 $(tput cols) | sort -R | spark | lolcat; echo; echo;
-
 # Plugins
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+# Spark
+sleep 0.03; echo; echo; seq 1 $COLUMNS | sort -R | spark | lolcat; echo; echo;
