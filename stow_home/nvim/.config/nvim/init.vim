@@ -7,12 +7,24 @@ call plug#begin('~/.config/nvim/plugged')
 "{{ lsp }}
     Plug 'neovim/nvim-lspconfig'
 "{{ rust dev }}
+    Plug 'simrat39/rust-tools.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "{{ fime management }}
     Plug 'scrooloose/nerdtree'
 "{{ ui }}
     Plug 'dracula/vim'
     Plug 'itchyny/lightline.vim'
+
+
+" Completion framework
+Plug 'hrsh7th/nvim-cmp'
+" LSP completion source for nvim-cmp
+Plug 'hrsh7th/cmp-nvim-lsp'
+" Snippet completion source for nvim-cmp
+Plug 'hrsh7th/cmp-vsnip'
+" Other usefull completion sources
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
 
 call plug#end()
 
@@ -66,6 +78,85 @@ set noshowmode
 
 " }}}
 
+" simrat39/rust-tools.nvim {{{
+
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
+lua <<EOF
+-- https://sharksforarms.dev/posts/neovim-rust/
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            -- show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(opts)
+EOF
+
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
+EOF
+
+" }}}
+
 " scrooloose/nerdtree {{{
 
 map <C-n> :NERDTreeToggle<CR>
@@ -104,6 +195,8 @@ set noswapfile
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+autocmd BufWritePre * %s/\s\+$//e
+
 " }}}
 
 " tabs {{{
@@ -132,7 +225,7 @@ set splitright
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H> 
+nnoremap <C-H> <C-W><C-H>
 
 " files {{{
 
@@ -190,9 +283,13 @@ nnoremap x "_x
 nnoremap d "_d
 nnoremap D "_D
 vnoremap d "_d
+nnoremap c "_c
+nnoremap C "_C
 
 nnoremap <leader>d "+d
 nnoremap <leader>D "+D
 vnoremap <leader>d "+d
+nnoremap <leader>c "+c
+nnoremap <leader>C "+C
 
 " }}}
