@@ -6,6 +6,12 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'luochen1990/rainbow'
 "{{ lsp }}
     Plug 'neovim/nvim-lspconfig'
+"{{ completion }}
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-vsnip'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-buffer'
 "{{ rust dev }}
     Plug 'simrat39/rust-tools.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -14,17 +20,6 @@ call plug#begin('~/.config/nvim/plugged')
 "{{ ui }}
     Plug 'dracula/vim'
     Plug 'itchyny/lightline.vim'
-
-
-" Completion framework
-Plug 'hrsh7th/nvim-cmp'
-" LSP completion source for nvim-cmp
-Plug 'hrsh7th/cmp-nvim-lsp'
-" Snippet completion source for nvim-cmp
-Plug 'hrsh7th/cmp-vsnip'
-" Other usefull completion sources
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-buffer'
 
 call plug#end()
 
@@ -121,8 +116,6 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
     -- Add tab support
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
