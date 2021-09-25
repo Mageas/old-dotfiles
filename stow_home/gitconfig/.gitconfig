@@ -1,0 +1,6 @@
+[user]
+	email = arnaud.gaydamour@protonmail.com
+	name = Mageas
+	signingkey = B45836562531E7AD
+[commit]
+	gpgsign = true
