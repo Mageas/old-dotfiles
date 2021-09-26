@@ -4,3 +4,5 @@
 	signingkey = B45836562531E7AD
 [commit]
 	gpgsign = true
+[core]
+	editor = vim
