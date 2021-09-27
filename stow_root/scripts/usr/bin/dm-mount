@@ -15,12 +15,10 @@ dirs=$(find /mnt /media /mount /home -type d -maxdepth 3 2>/dev/null)
 mountpoint=$(echo "${dirs}" | dmenu -i -l 20 -p "Mount point?")
 [ -z "${mountpoint}" ] && exit 1
 
-    echo "sudo chown $(id -u):$(id -u) ${mountpoint}"
-
 sudo_password=$(dmenu -P -p "Enter your password: ")
 
 if [ ! -d "${mountpoint}" ]; then
-    createdir=$(echo -e "Yes\nNo" | dmenu -i -p "${mountpoint} does not exist, create it?")
+    createdir=$(echo "Yes\nNo" | dmenu -i -p "${mountpoint} does not exist, create it?")
     [ "${createdir}" = Yes ] && echo -n ${sudo_password} | sudo --stdin mkdir -p "${mountpoint}"
 fi
 
