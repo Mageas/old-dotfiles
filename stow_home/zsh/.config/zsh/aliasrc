@@ -31,7 +31,6 @@ alias \
         gaa="git add -A" \
         gc="git commit -m" \
         gp="git push" \
-        gcom="git checkout master" \
         gco="git checkout"
 
 # Docker
