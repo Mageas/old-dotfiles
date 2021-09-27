@@ -17,6 +17,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "{{ fime management }}
     Plug 'scrooloose/nerdtree'
+"{{ git }}
+    Plug 'APZelos/blamer.nvim'
 "{{ ui }}
     Plug 'dracula/vim'
     Plug 'itchyny/lightline.vim'
@@ -158,6 +160,13 @@ autocmd FileType nerdtree nmap l <Enter>
 " luochen1990/rainbow {{{
 
 let g:rainbow_active = 1
+
+" }}}
+
+" APZelos/blamer.nvim {{{
+
+let g:blamer_enabled = 1
+let g:blamer_delay = 500
 
 " }}}
 
