@@ -2,8 +2,16 @@
 
 call plug#begin('~/.config/nvim/plugged')
 
-"{{ dev }}
+"{{ file management }}
+    Plug 'scrooloose/nerdtree'
+"{{ tree }}
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"{{ ui }}
+    Plug 'dracula/vim'
+    Plug 'itchyny/lightline.vim'
     Plug 'luochen1990/rainbow'
+"{{ git }}
+    Plug 'APZelos/blamer.nvim'
 "{{ lsp }}
     Plug 'neovim/nvim-lspconfig'
 "{{ completion }}
@@ -14,14 +22,6 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'hrsh7th/cmp-buffer'
 "{{ rust dev }}
     Plug 'simrat39/rust-tools.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-"{{ fime management }}
-    Plug 'scrooloose/nerdtree'
-"{{ git }}
-    Plug 'APZelos/blamer.nvim'
-"{{ ui }}
-    Plug 'dracula/vim'
-    Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
