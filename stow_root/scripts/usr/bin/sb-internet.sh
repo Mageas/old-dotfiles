@@ -1,7 +1,9 @@
 #!/bin/sh
 
+_auto_detect_ethernet="$(nmcli c show --active | grep ethernet | awk '{print $NF}')"
+INTERFACE=${_auto_detect_ethernet:-enp1s0}
+
 INTERVAL=10
-INTERFACE="enp5s0"
 
 test_interface=$(ip addr show | grep ${INTERFACE})
 [ "${test_interface}" = "" ] && echo "[ Unknow]" && exit 1
