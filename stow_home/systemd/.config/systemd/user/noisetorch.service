@@ -1,0 +1,14 @@
+[Unit]
+Description=Noisetorch Noise Cancelling
+Requires=sys-devices-pci0000:00-0000:00:08.1-0000:0c:00.3-usb9-9\x2d4-9\x2d4:1.0-sound-card2-controlC2.device
+After=sys-devices-pci0000:00-0000:00:08.1-0000:0c:00.3-usb9-9\x2d4-9\x2d4:1.0-sound-card2-controlC2.device
+After=pipewire.service
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/bin/noisetorch -i -s alsa_input.usb-0c76_USB_PnP_Audio_Device-00.mono-fallback -t 95
+ExecStop=/usr/bin/noisetorch -u
+
+[Install]
+WantedBy=default.target
