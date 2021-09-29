@@ -1,17 +1,21 @@
 #!/bin/sh
 
+path=$HOME/Images/Screenshots/$(date '+%Y%m%d-%H%M%S').png
+
 options="window
-selection"
+selection
+screen"
 
 choice=$(echo "${options}" | dmenu -i -p "Which capture do you want?")
 
 case "${choice}" in
     window)
-        maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
-        notify-send -i ${HOME}/.config/icons/screenshot_ico.png "Screenshot" "You're the best photographer I've ever seen."
+        maim -i $(xdotool getactivewindow) -u $path | xclip -selection clipboard -t image/png
     ;;
     selection)
-        maim -s -u | xclip -selection clipboard -t image/png
-        notify-send -i ${HOME}/.config/icons/screenshot_ico.png "Screenshot" "You're the best photographer I've ever seen."
+        maim -s -u $path | xclip -selection clipboard -t image/png
+    ;;
+    screen)
+        maim -u $path | xclip -selection clipboard -t image/png
     ;;
 esac
