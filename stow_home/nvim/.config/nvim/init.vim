@@ -287,3 +287,9 @@ nnoremap <leader>c "+c
 nnoremap <leader>C "+C
 
 " }}}
+
+" rust {{{
+
+autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
+
+" }}}
