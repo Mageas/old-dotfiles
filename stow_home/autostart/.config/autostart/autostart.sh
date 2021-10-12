@@ -25,5 +25,5 @@ redshift &
 sxhkd &
 
 # Applications
-brave &
+firefox &
 discord &
