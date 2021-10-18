@@ -46,5 +46,5 @@ alias \
 
 # YOUTUBE-DL
 alias \
-        yt="youtube-dl" \
-        yta="youtube-dl --config-location ~/.config/youtube-dl/audio"
+        yt="yt-dlp -f \"bv[ext!=webm]+ba[ext!=webm]/b[ext!=webm]\" -o '~/Videos/youtube-dl/%(title)s.%(ext)s' --write-description --yes-playlist" \
+        yta="yt-dlp -f ba/b -ciw -o '~/Videos/youtube-dl/%(title)s.%(ext)s' -v --extract-audio --audio-quality 0 --audio-format mp3"
