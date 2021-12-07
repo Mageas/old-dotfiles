@@ -24,6 +24,9 @@ redshift &
 # Sxhkd
 sxhkd &
 
+# Doom
+/usr/bin/emacs --daemon &
+
 # Applications
 firefox &
 discord &
