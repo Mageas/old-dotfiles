@@ -16,6 +16,7 @@ HISTFILE=~/.cache/zsh/history
 
 # PATH
 export PATH=$PATH:$HOME/.local/bin
+export EDITOR="vim"
 
 # Autocomplete
 autoload -Uz compinit
