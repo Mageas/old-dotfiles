@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Open Joshuto without a terminal
+
+TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
+CWD_FILE="/tmp/joshuto-cwd-${TIMESTAMP}"
+env joshuto --last-dir "${CWD_FILE}" $@ \
+    && [ -e "${CWD_FILE}" ] \
+    && CWD_FILE=${CWD_FILE} zsh -c 'cd "$(cat "${CWD_FILE}")"; clear; zsh -i'
