@@ -48,3 +48,17 @@ alias \
 alias \
         yt="yt-dlp -f \"bv[ext!=webm]+ba[ext!=webm]/b[ext!=webm]\" -o '~/Videos/youtube-dl/%(title)s.%(ext)s' --write-description --yes-playlist" \
         yta="yt-dlp -f ba/b -ciw -o '~/Videos/youtube-dl/%(title)s.%(ext)s' -v --extract-audio --audio-quality 0 --audio-format mp3"
+
+# OPEN JOSHUTO
+alias \
+        lf="jh"
+function jh() {
+        TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
+        CWD_FILE="/tmp/joshuto-cwd-${TIMESTAMP}"
+        env joshuto --last-dir "${CWD_FILE}" $@
+
+        if [ -e "${CWD_FILE}" ]; then
+	        JOSHUTO_CWD=$(cat "${CWD_FILE}")
+	        rm "${CWD_FILE}" &>/dev/null && cd "${JOSHUTO_CWD}"
+        fi
+}
