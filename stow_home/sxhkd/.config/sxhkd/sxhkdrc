@@ -2,7 +2,7 @@ alt + Return
 	emacsclient -c -a 'emacs'
 
 super + e
-	eval $TERM -e "joshuto_window"
+	eval alacritty -e "joshuto_window"
 
 alt + F1
 	dm-screenshot
