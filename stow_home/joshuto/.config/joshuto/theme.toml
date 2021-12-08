@@ -1,27 +1,27 @@
 [selection]
-fg = "light_yellow"
+fg = "rgb(241, 250, 140)"
 bold = true
 [selection.prefix]
 prefix = "  "
 size = 2
 
 [executable]
-fg = "light_green"
+fg = "rgb(80, 250, 123)"
 bold = true
 
 [regular]
-fg = "white"
+fg = "rgb(248, 248, 242)"
 
 [directory]
-fg = "light_blue"
+fg = "rgb(189, 147, 249)"
 bold = true
 
 [link]
-fg = "light_cyan"
+fg = "rgb(139, 233, 253)"
 bold = true
 
 [link_invalid]
-fg = "red"
+fg = "rgb(255, 85, 85)"
 bold = true
 
 [socket]
@@ -31,60 +31,58 @@ bold = true
 [ext]
 
 [ext.bmp]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.jpg]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.jpeg]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.png]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.webp]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.ppm]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.svg]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 [ext.gif]
-fg = "yellow"
+fg = "rgb(255, 121, 198)"
 
 [ext.wav]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.flac]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.mp3]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.avi]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.m3u]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.mov]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.mp4]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.mkv]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.m4a]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.ts]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 [ext.webm]
-fg = "magenta"
-[ext.wmv]
-fg = "magenta"
+fg = "rgb(255, 184, 108)"
 
 [ext.7z]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.zip]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.bz2]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.gz]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.tar]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.tgz]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.xz]
-fg = "red"
+fg = "rgb(98, 114, 164)"
 [ext.rar]
-fg = "red"
+fg = "rgb(98, 114, 164)"

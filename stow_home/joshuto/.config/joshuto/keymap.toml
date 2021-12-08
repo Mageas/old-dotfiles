@@ -1,14 +1,14 @@
 mapcommand = [
-	{ keys = [ "T" ],		command = "new_tab" },
+	{ keys = [ "T" ],		    command = "new_tab" },
 	{ keys = [ "ctrl+t" ],		command = "new_tab" },
-	{ keys = [ "W" ],		command = "close_tab" },
+	{ keys = [ "W" ],			command = "close_tab" },
 	{ keys = [ "ctrl+w" ],		command = "close_tab" },
-	{ keys = [ "q" ],		command = "close_tab" },
-	{ keys = [ "Q" ],		command = "quit_to_cwd" },
+	{ keys = [ "q" ],			command = "quit_to_cwd" },
+	{ keys = [ "Q" ],			command = "close_tab" },
 
-	{ keys = [ "R" ],		command = "reload_dirlist" },
+	{ keys = [ "R" ],			command = "reload_dirlist" },
 	{ keys = [ "z", "h" ],		command = "toggle_hidden" },
-	{ keys = [ "\t" ],		command = "tab_switch 1" },
+	{ keys = [ "\t" ],			command = "tab_switch 1" },
 	{ keys = [ "backtab" ],		command = "tab_switch -1" },
 
 	{ keys = [ "alt+1" ],		command = "tab_switch_index 1" },
@@ -22,23 +22,23 @@ mapcommand = [
 	{ keys = [ "arrow_down" ],	command = "cursor_move_down" },
 	{ keys = [ "arrow_left" ],	command = "cd .." },
 	{ keys = [ "arrow_right" ],	command = "open" },
-	{ keys = [ "\n" ],		command = "open" },
-	{ keys = [ "end" ],		command = "cursor_move_end" },
+	{ keys = [ "\n" ],			command = "open" },
+	{ keys = [ "end" ],			command = "cursor_move_end" },
 	{ keys = [ "home" ],		command = "cursor_move_home" },
 	{ keys = [ "page_up" ],		command = "cursor_move_page_up" },
 	{ keys = [ "page_down" ],	command = "cursor_move_page_down" },
 
 	# vim-like keybindings
-	{ keys = [ "j" ],		command = "cursor_move_down" },
-	{ keys = [ "k" ],		command = "cursor_move_up" },
-	{ keys = [ "h" ],		command = "cd .." },
-	{ keys = [ "l" ],		command = "open" },
+	{ keys = [ "j" ],			command = "cursor_move_down" },
+	{ keys = [ "k" ],			command = "cursor_move_up" },
+	{ keys = [ "h" ],			command = "cd .." },
+	{ keys = [ "l" ],			command = "open" },
 	{ keys = [ "g", "g" ],		command = "cursor_move_home" },
-	{ keys = [ "G" ],		command = "cursor_move_end" },
-	{ keys = [ "r" ],		command = "open_with" },
+	{ keys = [ "G" ],			command = "cursor_move_end" },
+	{ keys = [ "r" ],			command = "open_with" },
 
-	{ keys = [ "[" ],		command = "parent_cursor_move_up" },
-	{ keys = [ "]" ],		command = "parent_cursor_move_down" },
+	{ keys = [ "[" ],			command = "parent_cursor_move_up" },
+	{ keys = [ "]" ],			command = "parent_cursor_move_down" },
 
 	{ keys = [ "c", "d" ],		command = ":cd " },
 	{ keys = [ "d", "d" ],		command = "cut_files" },
@@ -54,32 +54,32 @@ mapcommand = [
 	{ keys = [ "delete" ],		command = "delete_files" },
 	{ keys = [ "d", "D" ],		command = "delete_files" },
 
-	{ keys = [ "a" ],		command = "rename_append" },
-	{ keys = [ "A" ],		command = "rename_prepend" },
+	{ keys = [ "a" ],			command = "rename_append" },
+	{ keys = [ "A" ],			command = "rename_prepend" },
 
 	{ keys = [ "f", "t" ],		command = ":touch " },
 
-	{ keys = [ " " ],		command = "select --toggle=true" },
-	{ keys = [ "t" ],		command = "select --all=true --toggle=true" },
+	{ keys = [ " " ],			command = "select --toggle=true" },
+	{ keys = [ "t" ],			command = "select --all=true --toggle=true" },
 
-	{ keys = [ "w" ],		command = "show_workers --exit-key=w" },
+	{ keys = [ "w" ],			command = "show_workers --exit-key=w" },
 	{ keys = [ "b", "b" ],		command = "bulk_rename" },
-	{ keys = [ "=" ],		command = "set_mode" },
+	{ keys = [ "=" ],			command = "set_mode" },
 
-	{ keys = [ ":" ],		command = ":" },
-	{ keys = [ ";" ],		command = ":" },
+	{ keys = [ ":" ],			command = ":" },
+	{ keys = [ ";" ],			command = ":" },
 
-	{ keys = [ "'" ],		command = ":shell " },
+	{ keys = [ "'" ],			command = ":shell " },
 	{ keys = [ "m", "k" ],		command = ":mkdir " },
 	{ keys = [ "c", "w" ],		command = ":rename " },
 
-	{ keys = [ "/" ],		command = ":search " },
-	{ keys = [ "\\" ],		command = ":search_glob " },
-	{ keys = [ "S" ],		command = "search_fzf" },
-	{ keys = [ "C" ],		command = "subdir_fzf" },
+	{ keys = [ "/" ],			command = ":search " },
+	{ keys = [ "\\" ],			command = ":search_glob " },
+	{ keys = [ "S" ],			command = "search_fzf" },
+	{ keys = [ "C" ],			command = "subdir_fzf" },
 
-	{ keys = [ "n" ],		command = "search_next" },
-	{ keys = [ "N" ],		command = "search_prev" },
+	{ keys = [ "n" ],			command = "search_next" },
+	{ keys = [ "N" ],			command = "search_prev" },
 
 	{ keys = [ "s", "r" ],		command = "sort reverse" },
 	{ keys = [ "s", "l" ],		command = "sort lexical" },
@@ -88,10 +88,15 @@ mapcommand = [
 	{ keys = [ "s", "s" ],		command = "sort size" },
 	{ keys = [ "s", "e" ],		command = "sort ext" },
 
-	{ keys = [ "g", "r" ],		command = "cd /" },
-	{ keys = [ "g", "c" ],		command = "cd ~/.config" },
+	{ keys = [ "g", "G" ],		command = "cd ~/Git" },
 	{ keys = [ "g", "d" ],		command = "cd ~/Downloads" },
-	{ keys = [ "g", "e" ],		command = "cd /etc" },
+	{ keys = [ "g", "D" ],		command = "cd ~/Documents" },
+	{ keys = [ "g", "i" ],		command = "cd ~/Images" },
+	{ keys = [ "g", "v" ],		command = "cd ~/Videos" },
+	{ keys = [ "g", ".", "c" ],	command = "cd ~/.config" },
+	{ keys = [ "g", ".", "d" ],	command = "cd ~/.dots" },
 	{ keys = [ "g", "h" ],		command = "cd ~/" },
-	{ keys = [ "?" ],		command = "help" }
+	{ keys = [ "g", "r" ],		command = "cd /" },
+	{ keys = [ "g", "e" ],		command = "cd /etc" },
+	{ keys = [ "?" ],			command = "help" }
 ]
