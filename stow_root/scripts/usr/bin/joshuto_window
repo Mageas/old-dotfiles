@@ -4,6 +4,9 @@
 
 TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
 CWD_FILE="/tmp/joshuto-cwd-${TIMESTAMP}"
-env joshuto --last-dir "${CWD_FILE}" $@ \
-    && [ -e "${CWD_FILE}" ] \
-    && CWD_FILE=${CWD_FILE} zsh -c 'cd "$(cat "${CWD_FILE}")"; clear; zsh -i'
+env joshuto --last-dir "${CWD_FILE}" $@
+
+if [ -e "${CWD_FILE}" ]; then
+    JOSHUTO_CWD=$(cat "${CWD_FILE}")
+    rm "${CWD_FILE}" &>/dev/null && JOSHUTO_CWD=${JOSHUTO_CWD} zsh -c 'cd "${JOSHUTO_CWD}"; clear; zsh -i'
+fi
