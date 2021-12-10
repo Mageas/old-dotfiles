@@ -10,7 +10,7 @@ picom &
 xset s off -dpms
 
 # Status bar
-dwmblocks &
+statusbar &
 
 # Dunst
 /usr/bin/dunst &
