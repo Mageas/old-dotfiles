@@ -68,10 +68,10 @@ The keybindings are for commands that toggle on/off various line-related setting
 * NEOTREE
 Neotree is a file tree viewer.  When you open neotree, it jumps to the current file thanks to neo-smart-open.  The neo-window-fixed-size setting makes the neotree width be adjustable.  Doom Emacs had no keybindings set for neotree.  Since Doom Emacs uses 'SPC t' for 'toggle' keybindings, I used 'SPC t n' for toggle-neotree.
 
-| COMMAND        | DESCRIPTION               | KEYBINDING |
-|----------------+---------------------------+------------|
+| COMMAND        | DESCRIPTION                 | KEYBINDING |
+|----------------+-----------------------------+------------|
 | neotree-toggle | /Toggle neotree/            | SPC t n    |
-| neotree- dir   | /Open directory in neotree/ | SPC d n    |
+| neotree-dir    | /Open directory in neotree/ | SPC d n    |
 
 #+BEGIN_SRC emacs-lisp
 (after! neotree
@@ -176,10 +176,10 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
 #+END_SRC
 
 ** Making deleted files go to trash can
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 (setq delete-by-moving-to-trash t
       trash-directory "~/.local/share/Trash/files/")
-#+end_src
+#+END_SRC
 
 * RUST
 #+BEGIN_SRC emacs-lisp
@@ -203,4 +203,9 @@ Dired is the file manager within Emacs.  Below, I setup keybindings for image pr
     (apply orig-fn beg end type ?_ args))
 (advice-add 'evil-delete :around 'meain/evil-delete-advice)
 (advice-add 'evil-change :around 'meain/evil-delete-advice)
+#+END_SRC
+
+* RAINBOW
+#+BEGIN_SRC emacs-lisp
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 #+END_SRC

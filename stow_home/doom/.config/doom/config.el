@@ -95,3 +95,5 @@
     (apply orig-fn beg end type ?_ args))
 (advice-add 'evil-delete :around 'meain/evil-delete-advice)
 (advice-add 'evil-change :around 'meain/evil-delete-advice)
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)

@@ -52,3 +52,4 @@
 
 (package! dired-open)
 (package! dired-subtree)
+(package! rainbow-delimiters)
