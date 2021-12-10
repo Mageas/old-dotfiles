@@ -39,6 +39,7 @@ fi
 # Plugins
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 2>/dev/null
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+source ~/.config/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # Spark
 sleep 0.03; echo; echo; seq 1 $COLUMNS | sort -R | spark | lolcat; echo; echo;
