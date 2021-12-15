@@ -1,7 +1,6 @@
 [Unit]
 Description=Change microphone volume
 After=pipewire.service
-After=noisetorch.service
 
 [Service]
 Type=simple
