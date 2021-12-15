@@ -27,6 +27,9 @@ sxhkd &
 # Doom
 /usr/bin/emacs --daemon &
 
+# Easy effects
+easyeffects --gapplication-service -l default &
+
 # Applications
 firefox &
 discord &
