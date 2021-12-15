@@ -8,6 +8,7 @@ orange="#da8548"
 green="#98be65"
 magenta="#c678dd"
 cyan="#46d9ff"
+teal="#4db5bd"
 
 _version() {
     v=$(uname -r)
@@ -57,12 +58,19 @@ _clock() {
     printf "^d^"
 }
 
+_mullvad() {
+    [ -z "$(mullvad status | grep "Connected")" ] && return
+    printf "^b${bg}^^c${teal}^  "
+    printf "^d^"
+}
+
 interval=0
 while true; do
 
 	[ $(($interval % 300)) = 0 ] && _updates=$(_updates)
 	[ $(($interval % 300)) = 0 ] && _version=$(_version)
+    [ $(($interval % 10)) = 0 ] && _mullvad=$(_mullvad)
     interval=$((interval + 1))
 
-    sleep 1 && xsetroot -name "${_version}$(_cpu)$(_ram)${_updates}$(_date)$(_clock)"
+    sleep 1 && xsetroot -name "${_version}$(_cpu)$(_ram)${_updates}$(_date)$(_clock)${_mullvad}"
 done
