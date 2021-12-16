@@ -1,0 +1,23 @@
+#!/bin/bash
+
+options=$(echo $(easyeffects --presets 2>&1 | grep Output | awk '{print $3}') | tr ',' "\n")
+
+preset=$(dconf read /com/github/wwmm/easyeffects/last-used-output-preset | sed "s/'//g")
+
+for option in ${options[@]}; do
+    [ "${option}" == "${preset}" ] && opt+=("*${option}") || opt+=("${option}")
+done
+
+choice=$(printf '%s\n' "${opt[@]}" | dmenu -i -l 20 -p "Presets:")
+
+[ -z ${choice} ] && exit 1
+
+if ! printf '%s\n' "${options[@]}" | grep -Fxq ${choice}; then
+    exit 1
+fi
+
+if [ "${choice:0:1}" != "*" ]; then
+    easyeffects --load-preset $(echo ${choice})
+    # Update the preset on the gui; might be a bug with --gapplication-service
+    dconf write /com/github/wwmm/easyeffects/last-used-output-preset "'$(echo ${choice})'"
+fi
