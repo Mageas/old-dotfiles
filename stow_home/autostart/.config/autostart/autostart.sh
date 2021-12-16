@@ -28,7 +28,8 @@ sxhkd &
 /usr/bin/emacs --daemon &
 
 # Easy effects
-easyeffects --gapplication-service -l default &
+#easyeffects --gapplication-service -l default &
+easyeffects --gapplication-service &
 
 # Applications
 firefox &
