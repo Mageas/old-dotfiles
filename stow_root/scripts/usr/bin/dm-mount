@@ -18,7 +18,7 @@ mountpoint=$(echo "${dirs}" | dmenu -i -l 20 -p "Mount point?")
 sudo_password=$(dmenu -P -p "Enter your password: ")
 
 if [ ! -d "${mountpoint}" ]; then
-    createdir=$(echo "Yes\nNo" | dmenu -i -p "${mountpoint} does not exist, create it?")
+    createdir=$(echo -e "Yes\nNo" | dmenu -i -p "${mountpoint} does not exist, create it?")
     [ "${createdir}" = Yes ] && echo -n ${sudo_password} | sudo --stdin mkdir -p "${mountpoint}"
 fi
 
