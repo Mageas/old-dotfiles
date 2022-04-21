@@ -1,4 +1,5 @@
 [Default Applications]
+inode/directory=pcmanfm.desktop
 application/json=firefox.desktop
 application/pdf=firefox.desktop
 text/html=firefox.desktop
