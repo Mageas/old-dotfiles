@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
-
 # Screen - CVT
-xrandr --output DP-4 --mode "1920x1080" --rate 160 --output DP-1 --mode "1280x1024" --rate 60 --left-of DP-4
+xrandr --output DP-0 --mode "2560x1440" --primary --rate 240 --output DP-4 --mode "1920x1080" --rate 165 --left-of DP-0
 
 # Compositor
 picom &
@@ -34,3 +32,4 @@ easyeffects --gapplication-service &
 # Applications
 firefox &
 discord &
+revolt &
