@@ -1,5 +1,5 @@
 # Screen - CVT
-xrandr --output DP-0 --mode "2560x1440" --primary --rate 240 --output DP-4 --mode "1920x1080" --rate 165 --left-of DP-0
+xrandr --output DP-0 --mode "2560x1440" --primary --output DP-4 --mode "1920x1080" --rate 165 --left-of DP-0
 
 # Xresources
 [[ -f ~/.config/Xresources ]] && xrdb -merge -I$HOME ~/.config/Xresources
@@ -27,10 +27,6 @@ sxhkd &
 
 # Doom
 /usr/bin/emacs --daemon &
-
-# Easy effects
-#easyeffects --gapplication-service -l default &
-easyeffects --gapplication-service &
 
 # Applications
 firefox &
