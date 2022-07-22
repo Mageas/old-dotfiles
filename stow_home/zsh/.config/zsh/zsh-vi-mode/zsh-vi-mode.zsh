@@ -41,7 +41,7 @@
 # ```
 #
 # ZVM_INIT_MODE
-# the pugin initial mode (default is doing the initialization when the first
+# the plugin initial mode (default is doing the initialization when the first
 # new command line is starting. For doing the initialization instantly, you
 # can set it to `sourcing`.
 #
@@ -285,7 +285,7 @@ if $ZVM_LAZY_KEYBINDINGS; then
   ZVM_LAZY_KEYBINDINGS_LIST=()
 fi
 
-# Set the cursor stlye in defferent vi modes, the value you could use
+# Set the cursor style in defferent vi modes, the value you could use
 # the predefined value, such as $ZVM_CURSOR_BLOCK, $ZVM_CURSOR_BEAM,
 # $ZVM_CURSOR_BLINKING_BLOCK and so on.
 : ${ZVM_INSERT_MODE_CURSOR:=$ZVM_CURSOR_BEAM}
@@ -2993,19 +2993,13 @@ function zvm_viins_undo() {
   fi
 }
 
-# Change cursor to support for inside/outside tmux
 function zvm_set_cursor() {
   # Term of vim isn't supported
   if [[ -n $VIMRUNTIME ]]; then
     return
   fi
 
-  # Tmux sequence
-  if [[ -z $TMUX ]]; then
-    echo -ne "$1"
-  else
-    echo -ne "\ePtmux;\e\e$1\e\\"
-  fi
+  echo -ne "$1"
 }
 
 # Get the escape sequence of cursor style
@@ -3456,3 +3450,4 @@ case $ZVM_INIT_MODE in
   sourcing) zvm_init;;
   *) precmd_functions+=(zvm_init);;
 esac
+

@@ -22,6 +22,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'hrsh7th/cmp-buffer'
 "{{ rust dev }}
     Plug 'simrat39/rust-tools.nvim'
+"    Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -290,6 +291,6 @@ nnoremap <leader>C "+C
 
 " rust {{{
 
-autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
+" autocmd BufRead,BufNewFile Cargo.toml,Cargo.lock,*.rs compiler cargo
 
 " }}}

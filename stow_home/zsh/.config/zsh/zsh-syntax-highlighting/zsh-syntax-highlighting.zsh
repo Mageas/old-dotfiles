@@ -408,13 +408,13 @@ _zsh_highlight_call_widget()
 # We use the new codepath under two conditions:
 #
 # 1. If it's available, which we check by testing for add-zle-hook-widget's availability.
-#
+# 
 # 2. If zsh has the memo= feature, which is required for interoperability reasons.
 #    See issues #579 and #735, and the issues referenced from them.
 #
 #    We check this with a plain version number check, since a functional check,
 #    as done by _zsh_highlight, can only be done from inside a widget
-#    function — a catch-22.
+#    function — a catch-22.
 #
 #    See _zsh_highlight for the magic version number.
 if is-at-least 5.8.1.1 $ZSH_VERSION.0.0 && _zsh_highlight__function_callable_p add-zle-hook-widget
